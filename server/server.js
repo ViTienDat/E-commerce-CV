@@ -2,8 +2,10 @@ const express = require("express");
 require("dotenv").config();
 const dbConnect = require("./src/config/dbConnect")
 const initRoutes = require("./src/routes")
+const cookies = require("cookie-parser");
 
 const app = express()
+app.use(cookies())
 const port = process.env.PORT || 5001
 
 app.use(express.json())
