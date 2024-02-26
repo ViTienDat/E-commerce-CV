@@ -3,8 +3,11 @@ require("dotenv").config();
 const dbConnect = require("./src/config/dbConnect")
 const initRoutes = require("./src/routes")
 const cookies = require("cookie-parser");
+const cors = require("cors")
 
 const app = express()
+app.use(cors())
+
 app.use(cookies())
 const port = process.env.PORT || 5001
 
