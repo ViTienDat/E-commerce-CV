@@ -10,7 +10,7 @@ export default {
     },
     extend: {
       width: {
-        main: "1170px"
+        main: "90%"
       },
       backgroundColor: {
         main: "#ed1c24",

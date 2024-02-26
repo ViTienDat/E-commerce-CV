@@ -60,7 +60,7 @@ const DetailProduct = () => {
             <h3 className="hover:text-main"> Trang chủ </h3>
           </Link>
           <span className="px-2"> / </span>
-          <Link to={path.PRODUCTS}>
+          <Link to={`${path.PRODUCTS}/all`}>
             <h3 className="hover:text-main"> ALL ITEMS</h3>
           </Link>
           <span className="px-2"> / </span>

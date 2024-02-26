@@ -14,8 +14,8 @@ const Product = ({ data }) => {
     setIsShowOption(false);
   };
   return (
-    <div className="w-[270px] flex flex-col gap-7">
-      <Link to={`${path.DETAIL_PRODUCT}/${data._id}/${data.slug}`}>
+    <div className="flex flex-col gap-7">
+      <Link to={`/${path.DETAIL_PRODUCT}/${data._id}/${data.slug}`}>
         <div
           className="relative"
           onMouseEnter={handleHover}
