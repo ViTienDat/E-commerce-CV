@@ -22,6 +22,8 @@ const Home = () => {
     fetchProduct();
   }, []);
 
+  window.scrollTo(0, 0);
+
   return (
     <div className="w-main py-[35px]">
       <div className="flex gap-[30px] flex-wrap">

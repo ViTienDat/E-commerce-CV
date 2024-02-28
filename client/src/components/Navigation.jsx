@@ -4,11 +4,14 @@ import icons from "../ultils/icons";
 import { navigations } from "../ultils/contants";
 import { NavLink } from "react-router-dom";
 import path from "../ultils/path";
+import { useSelector } from "react-redux";
 
 const { BsFillHandbagFill, IoSearchSharp } = icons;
 const activeStyle = "px-4 font-semibold text-[14px] text-main";
 const notActiveStyle = "px-4 font-semibold text-[14px] hover:text-main";
+
 const Navigation = () => {
+  const { current } = useSelector((state) => state.user);
   return (
     <div className="w-main flex flex-col">
       <div className="flex items-center h-[100px] justify-center ">
@@ -30,9 +33,10 @@ const Navigation = () => {
             </NavLink>
           ))}
         </div>
+
         <div className="flex gap-6 px-[15px]">
           <IoSearchSharp size={20} />
-          <BsFillHandbagFill size={18} />
+          {current && <BsFillHandbagFill size={18} />}
         </div>
       </div>
     </div>

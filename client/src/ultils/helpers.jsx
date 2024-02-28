@@ -40,3 +40,8 @@ export const validate = (payload, setInvalidFields) => {
   }
   return invalid;
 };
+
+export const gennerateRange = (start, end) => {
+  const length = end - start + 1;
+  return Array.from({ length }, (_, index) => start + index);
+};

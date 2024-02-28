@@ -28,7 +28,7 @@ const Products = () => {
   const { category } = useParams();
   const fetchProductByCategory = async (queries) => {
     const response = await apiGetProducts(queries);
-    if (response.success) setProducts(response.data);
+    if (response.success) setProducts(response);
   };
 
   const changeValue = useCallback(
@@ -39,20 +39,21 @@ const Products = () => {
   );
 
   useEffect(() => {
-    console.log(params);
     const queries = {};
     for (let i of params) queries[i[0]] = i[1];
     fetchProductByCategory(queries);
   }, [params]);
 
   useEffect(() => {
-    navigate({
-      pathname: `/product/${category}`,
-      search: createSearchParams({ sort }).toString(),
-    });
+    if (sort) {
+      navigate({
+        pathname: `/product/${category}`,
+        search: createSearchParams({ sort }).toString(),
+      });
+    }
   }, [sort]);
 
-  const { categories } = useSelector((state) => state.app);
+  window.scrollTo(0, 0);
   return (
     <div className="flex flex-col w-full gap-8">
       <div className="text-[14px] bg-[#f5f5f5] py-[15px]">
@@ -84,12 +85,12 @@ const Products = () => {
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column"
           >
-            {Products?.map((el) => (
+            {Products?.data?.map((el) => (
               <Product data={el} key={el._id} />
             ))}
           </Masonry>
           <div className=" w-main m-auto my-4 flex justify-end">
-            <Pagination />
+            <Pagination totalCount={Products?.counts} />
           </div>
         </div>
       </div>

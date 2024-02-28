@@ -52,6 +52,8 @@ const DetailProduct = () => {
     [quantity]
   );
 
+  window.scrollTo(0, 0);
+
   return (
     <div className="w-full">
       <div className="bg-[#f5f5f5] py-[15px] flex justify-center">

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { InputField, ButtonCt } from "../../components";
+import { InputField, ButtonCt, Loading } from "../../components";
 import { apiRegister, apiLogin } from "../../apis/user";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import path from "../../ultils/path";
 import { login } from "../../store/user/userSlice";
 import { useDispatch } from "react-redux";
 import { validate } from "../../ultils/helpers";
+import { showModal } from "../../store/app/appSlice";
 
 const Login = () => {
   const [invalidFields, setInvalidFields] = useState([]);
@@ -35,7 +36,9 @@ const Login = () => {
       : validate(data, setInvalidFields);
     if (invalid === 0) {
       if (isRegister) {
+        dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
         const response = await apiRegister(payload);
+        dispatch(showModal({ isShowModal: false, modalChildren: null }));
         if (response.success) {
           Swal.fire("Congratulation", response?.message, "success").then(() => {
             setIsRegister(false);
