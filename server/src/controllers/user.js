@@ -71,7 +71,7 @@ const getCurrent = asyncHandler(async (req, res) => {
       message: "Missing input",
     });
   }
-  const user = await User.findById(_id).select("-role -password -_id");
+  const user = await User.findById(_id).select(" -password");
   return res.status(200).json({
     success: user ? true : false,
     data: user ? user : "user not found",
@@ -79,11 +79,55 @@ const getCurrent = asyncHandler(async (req, res) => {
 });
 
 const getAllUser = asyncHandler(async (req, res) => {
-  const users = await User.find().select("-role -password -_id");
-  return res.status(200).json({
-    success: users ? true : false,
-    data: users ? users : "user not found",
-  });
+  const queries = { ...req.query };
+
+  const excludeFields = ["limit", "sort", "page", "fields"];
+  excludeFields.forEach((el) => delete queries[el]);
+
+  let queryString = JSON.stringify(queries);
+  queryString.replace(/\b(get|gt|lt|lte)\b/g, (macthedEl) => `$${macthedEl}`);
+  const formatQueries = JSON.parse(queryString);
+
+  if (queries?.email)
+    formatQueries.email = { $regex: queries.email, $options: "i" };
+  if(req?.query?.q) {
+    delete formatQueries.q
+    formatQueries["$or"] = [
+      {name: {$regex: req?.query?.q, $options: "i" }},
+      {email: {$regex: req?.query?.q, $options: "i" }},
+      {mobile: {$regex: req?.query?.q, $options: "i" }},
+    ]
+  }
+  let queryCommand = User.find(formatQueries);
+
+
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    queryCommand = queryCommand.sort(sortBy);
+  }
+  if (req.query.fields) {
+    const fields = req.query.fields.split(",").join(" ");
+    queryCommand = queryCommand.select(fields);
+  }
+
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || process.env.LIMIT_PRODUCT;
+  const skip = limit * (page - 1);
+
+  queryCommand.skip(skip).limit(limit);
+  //execute query
+  queryCommand
+    .then(async (response) => {
+      const counts = await User.find(formatQueries).countDocuments();
+      return res.status(200).json({
+        success: response ? true : false,
+        counts,
+        data: response ? response : null,
+      });
+    })
+    .catch((err) => {
+      throw new Error(err.message);
+    });
 });
 
 const updateCart = asyncHandler(async (req, res) => {
