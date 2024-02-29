@@ -1,11 +1,10 @@
-import React, { memo, useState, useRef } from "react";
+import React, { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import path from "../ultils/path";
 import { formatMoney } from "../ultils/helpers";
 import { SelectOption } from "./";
 
 const Product = ({ data }) => {
-  const optionRef = useRef();
   const [isShowOption, setIsShowOption] = useState(false);
   const handleHover = () => {
     setIsShowOption(true);

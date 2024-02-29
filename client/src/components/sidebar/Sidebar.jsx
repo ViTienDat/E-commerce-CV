@@ -15,7 +15,7 @@ const Sidebar = () => {
                 ? " text-main py-[10px] pr-[10px] text-[14px]"
                 : "py-[10px] pr-[10px] text-[14px] hover:text-main"
             }
-            key={el?.slug}
+            key={el.slug}
             to={`/product/${el.slug}`}
           >
             {el?.title.toUpperCase()}

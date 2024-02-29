@@ -25,7 +25,6 @@ const Header = () => {
         });
       });
   }, [mes]);
-  console.log(current?.role);
   return (
     <div className=" w-full h-10 flex justify-center bg-[#333333] text-[#CCCCCC] text-[13px] ">
       <div className="w-main flex justify-between items-center ">

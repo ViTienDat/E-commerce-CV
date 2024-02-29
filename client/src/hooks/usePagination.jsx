@@ -1,10 +1,9 @@
 import React, { useMemo } from "react";
-const productLimit = import.meta.env.VITE_APP_API_URL;
 import { gennerateRange } from "../ultils/helpers";
 
 const usePagination = (totalCount, currentPage, siblingCount = 1) => {
   const panigationArray = useMemo(() => {
-    const pageSize = 10;
+    const pageSize = import.meta.env.VITE_APP_LIMIT || 10;
     const panigationCount = Math.ceil(totalCount / pageSize);
     const totalPanigationItem = siblingCount + 5;
 

@@ -7,14 +7,15 @@ const InputField = ({
   type,
   invalidFields,
   setInvalidFields,
+  placeholder,
 }) => {
   return (
     <div className="flex flex-col">
       <input
-        onFocus={() => setInvalidFields([])}
+        onFocus={() => setInvalidFields && setInvalidFields([])}
         type={type || "text"}
         className="px-4 py-2 border w-full outline-none"
-        placeholder={nameKey}
+        placeholder={placeholder || nameKey}
         value={value}
         onChange={(e) =>
           setValue((prev) => ({ ...prev, [nameKey]: e.target.value }))

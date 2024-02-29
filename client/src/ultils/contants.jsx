@@ -1,4 +1,7 @@
 import path from "./path";
+import icons from "./icons";
+
+const { MdDashboard, FaLayerGroup, RiBillFill, BiLogoProductHunt } = icons;
 
 export const navigations = [
   {
@@ -53,5 +56,45 @@ export const selectOption = [
     id: 1,
     value: "createdAt",
     text: "Hàng cũ nhất",
+  },
+];
+
+export const adminSidebar = [
+  {
+    id: 1,
+    type: "single",
+    text: "Dashboard",
+    path: `/${path.ADMIN}/${path.DASHBOARD}`,
+    icon: <MdDashboard size={20} />,
+  },
+  {
+    id: 2,
+    type: "single",
+    text: "Manage users",
+    path: `/${path.ADMIN}/${path.MANAGE_USER}`,
+    icon: <FaLayerGroup size={20} />,
+  },
+  {
+    id: 3,
+    type: "parent",
+    text: "Products",
+    icon: <BiLogoProductHunt size={20} />,
+    submenu: [
+      {
+        text: "Create product",
+        path: `/${path.ADMIN}/${path.CREATE_PRODUCT}`,
+      },
+      {
+        text: "Manage product",
+        path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`,
+      },
+    ],
+  },
+  {
+    id: 4,
+    type: "single",
+    text: "Manage oders",
+    path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+    icon: <RiBillFill size={20} />,
   },
 ];
