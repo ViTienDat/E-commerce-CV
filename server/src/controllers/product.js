@@ -3,11 +3,17 @@ const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
 
 const createProduct = asyncHandler(async (req, res) => {
-  if (Object.keys(req.body).length === 0) {
+  const {color, ...body} = req.body
+  if(color) body.color = color.split(" ")
+  if (Object.keys(body).length === 0) {
     throw new Error("Missing input");
   }
-  if (req.body && req.body.title) req.body.slug = slugify(req.body.title);
-  const newProduct = await Product.create(req.body);
+  const thumbnail = req?.files?.thumbnail[0]?.path;
+  const images = req?.files?.images?.map((el) => el.path);
+  if (body && body.title) body.slug = slugify(body.title);
+  if (thumbnail) body.thumbnail = thumbnail;
+  if (images) body.images = images;
+  const newProduct = await Product.create(body);
   return res.status(200).json({
     success: newProduct ? true : false,
     data: newProduct ? newProduct : null,
@@ -17,7 +23,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const getProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params;
-  const product = await Product.findById(pid).populate("category", "title")
+  const product = await Product.findById(pid).populate("category", "title");
 
   return res.status(200).json({
     success: product ? true : false,
@@ -102,9 +108,13 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const uploadImage = asyncHandler(async (req, res) => {
   const { pid } = req.params;
   if (!req.files) throw new Error("Missing input");
-  const response = await Product.findByIdAndUpdate(pid, {
-    $push: { images: { $each: req.files.map((el) => el.path) } },
-  }, {new: true});
+  const response = await Product.findByIdAndUpdate(
+    pid,
+    {
+      $push: { images: { $each: req.files.map((el) => el.path) } },
+    },
+    { new: true }
+  );
   return res.status(200).json({
     success: response ? true : false,
     data: response ? response : null,
@@ -115,7 +125,11 @@ const uploadImage = asyncHandler(async (req, res) => {
 const uploadThumb = asyncHandler(async (req, res) => {
   const { pid } = req.params;
   if (!req.file) throw new Error("Missing input");
-  const response = await Product.findByIdAndUpdate(pid, {thumbnail: req.file.path},{new: true});
+  const response = await Product.findByIdAndUpdate(
+    pid,
+    { thumbnail: req.file.path },
+    { new: true }
+  );
   return res.status(200).json({
     success: response ? true : false,
     data: response ? response : null,
@@ -130,5 +144,5 @@ module.exports = {
   updateProduct,
   getProducts,
   uploadImage,
-  uploadThumb
+  uploadThumb,
 };

@@ -71,7 +71,7 @@ const getCurrent = asyncHandler(async (req, res) => {
       message: "Missing input",
     });
   }
-  const user = await User.findById(_id).select(" -password");
+  const user = await User.findById(_id).select("-password");
   return res.status(200).json({
     success: user ? true : false,
     data: user ? user : "user not found",
@@ -130,6 +130,28 @@ const getAllUser = asyncHandler(async (req, res) => {
     });
 });
 
+const updateUserByAdmin = asyncHandler(async(req, res) => {
+  const {uid} = req.params
+  const response = await User.findByIdAndUpdate( uid, req.body, {new:true} ).select("-password")
+
+  return res.status(200).json({
+    success: response ? true : false,
+    data: response ? response : null,
+    message: response ? "update user success" : "update user wrong!"
+  })
+})
+
+const deleteUserByAdmin = asyncHandler(async(req, res) => {
+  const {uid} = req.params
+  const response = await User.findByIdAndDelete(uid)
+
+  return res.status(200).json({
+    success: response ? true : false,
+    data: response ? response : null,
+    message: response ? "delete user success" : "delete user wrong!"
+  })
+})
+
 const updateCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { pid, color, size, quantity } = req.body;
@@ -170,5 +192,7 @@ module.exports = {
   getCurrent,
   logout,
   updateCart,
-  getAllUser
+  getAllUser,
+  updateUserByAdmin,
+  deleteUserByAdmin
 };

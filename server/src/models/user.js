@@ -27,6 +27,11 @@ var userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    isblock: {
+      type: String,
+      enum: ["Blocked", "Active"],
+      default: "Active",
+    },
     cart: [
       {
         product: { type: mongoose.Types.ObjectId, ref: "Product" },
