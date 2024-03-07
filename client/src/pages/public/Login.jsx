@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { InputField, ButtonCt, Loading } from "../../components";
 import { apiRegister, apiLogin } from "../../apis/user";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import path from "../../ultils/path";
 import { login } from "../../store/user/userSlice";
 import { useDispatch } from "react-redux";
@@ -112,12 +112,20 @@ const Login = () => {
           style={`w-full py-2 flex items-center justify-center text-white bg-main hover:bg-main2 `}
           handleOnclick={handleSubmit}
         />
-        <span
-          className="text-[13px] hover:text-main cursor-pointer flex-none m-auto"
-          onClick={() => setIsRegister(!isRegister)}
-        >
-          {isRegister ? "Login" : "Not a member? Signup"}
-        </span>
+        <div className="flex justify-between">
+          <span
+            className="text-[13px] hover:text-main cursor-pointer flex-none "
+            onClick={() => setIsRegister(!isRegister)}
+          >
+            {isRegister ? "Login" : "Not a member? Signup"}
+          </span>
+          <Link
+            to={"/"}
+            className="text-[13px] hover:text-main cursor-pointer flex-none "
+          >
+            Go To Home
+          </Link>
+        </div>
       </div>
     </div>
   );

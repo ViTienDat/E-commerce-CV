@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Product } from "../../components";
+import { Loading, Product } from "../../components";
 import { apiGetProducts } from "../../apis/product";
 import { Link } from "react-router-dom";
 import path from "../../ultils/path";
 import Masonry from "react-masonry-css";
+import { useDispatch } from "react-redux";
 
 const breakpointColumnsObj = {
   default: 4,
@@ -13,6 +14,7 @@ const breakpointColumnsObj = {
 };
 
 const Home = () => {
+  const dispatch = useDispatch();
   const [products, setProducts] = useState(null);
   const fetchProduct = async () => {
     const response = await apiGetProducts();

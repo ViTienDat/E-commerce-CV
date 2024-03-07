@@ -5,9 +5,9 @@ import { apiGetProduct } from "../../apis/product";
 import Slider from "react-slick";
 import { formatMoney } from "../../ultils/helpers";
 import { SelectQuantity } from "../../components";
-import teesize from "../../assets/tee-size.webp";
-import jacketsize from "../../assets/jacket-size.webp";
-import hoodiesize from "../../assets/hoodie-size.webp";
+import { Size } from "../../components";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../store/app/appSlice";
 
 const settings = {
   dots: false,
@@ -18,6 +18,7 @@ const settings = {
 };
 
 const DetailProduct = () => {
+  const dispatch = useDispatch();
   const [isActive, setIsActive] = useState("S");
   const [showImgSize, setShowImgSize] = useState(false);
   const [productData, setProductData] = useState(null);
@@ -26,6 +27,7 @@ const DetailProduct = () => {
   const fetchProductData = async () => {
     const response = await apiGetProduct(pid);
     if (response) setProductData(response?.data);
+    window.scrollTo(0, 0);
   };
   useEffect(() => {
     if (pid) fetchProductData();
@@ -51,9 +53,6 @@ const DetailProduct = () => {
     },
     [quantity]
   );
-
-  window.scrollTo(0, 0);
-
   return (
     <div className="w-full">
       <div className="bg-[#f5f5f5] py-[15px] flex justify-center">
@@ -81,19 +80,21 @@ const DetailProduct = () => {
             />
           </div> */}
           <img src={productData?.thumbnail} alt="thumbnail" />
-          <div className="w-full">
-            <Slider {...settings} className="img-slider">
-              {productData?.images?.map((el) => (
-                <div key={el} className="p-2">
-                  <img
-                    src={el}
-                    alt="image product"
-                    className="object-contain w-[80px] h-[80px] "
-                  />
-                </div>
-              ))}
-            </Slider>
-          </div>
+          {productData?.images.length > 1 && (
+            <div className="w-full">
+              <Slider {...settings} className="img-slider">
+                {productData?.images?.map((el) => (
+                  <div key={el} className="p-2">
+                    <img
+                      src={el}
+                      alt="image product"
+                      className="object-contain w-[80px] h-[80px] "
+                    />
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          )}
         </div>
         <div className="w-[60%] text-[14px]">
           <h1 className="text-[30px] mb-[10px]">
@@ -140,6 +141,30 @@ const DetailProduct = () => {
                 XL
               </button>
             </div>
+            <div className="w-main pt-8 pb-4 ">
+              {productData?.category.title !== "bottom" &&
+              productData?.category.title !== "accessories" ? (
+                <span
+                  onClick={() =>
+                    dispatch(
+                      showModal({
+                        isShowModal: true,
+                        modalChildren: (
+                          <Size category={productData?.category.title} />
+                        ),
+                      })
+                    )
+                  }
+                  className="bg-main w py-2 px-5 cursor-pointer text-white hover:bg-main2"
+                >
+                  Bảng size
+                </span>
+              ) : (
+                <span className="bg-gray-400 w py-2 px-5 cursor-default text-white ">
+                  Bảng size
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex flex-col">
             <div className="mb-[15px]">Số lượng:</div>
@@ -155,29 +180,6 @@ const DetailProduct = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="mb-2">
-        <div className="w-main m-auto">
-          <span
-            onClick={() => setShowImgSize(!showImgSize)}
-            className="bg-main w py-2 px-5 cursor-pointer text-white hover:bg-main2"
-          >
-            Bảng size
-          </span>
-        </div>
-        {showImgSize && (
-          <div className="my-10">
-            {productData?.category.title === "tee" && (
-              <img src={teesize} alt="img-size" className="w-main m-auto" />
-            )}
-            {productData?.category.title === "jacket" && (
-              <img src={jacketsize} alt="img-size" className="w-main m-auto" />
-            )}
-            {productData?.category.title === "hoodie" && (
-              <img src={hoodiesize} alt="img-size" className="w-main m-auto" />
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

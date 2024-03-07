@@ -14,7 +14,8 @@ export default {
       },
       backgroundColor: {
         main: "#ed1c24",
-        main2: "#0089ff"
+        main2: "#0089ff",
+        overlay: "rgba(0,0,0,0.5)"
       },
       colors: {
         main: "#0089ff"

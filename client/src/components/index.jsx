@@ -13,3 +13,8 @@ export { default as Pagination } from "./Pagination";
 export { default as PagiItem } from "./PagiItem";
 export { default as Loading } from "./Loading";
 export { default as SidebarAdmin } from "./sidebar/SidebarAdmin";
+export { default as InputFrom } from "./InputFrom";
+export { default as SelectFrom } from "./SelectFrom";
+export { default as SelectForm2 } from "./SelectForm2";
+export { default as Modal } from "./Modal";
+export { default as Size } from "./Size";

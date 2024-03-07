@@ -19,16 +19,19 @@ import {
 import { MemberLayout, Personal } from "./pages/member";
 import path from "./ultils/path";
 import { getCategories } from "./store/app/asyncActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Modal } from "./components";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
   }, []);
+  const { isShowModal, modalChildren } = useSelector((state) => state.app);
   return (
-    <div className="min-h-screen font-main">
+    <div className="font-main relative">
+      {isShowModal && <Modal>{modalChildren}</Modal>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />

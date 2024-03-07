@@ -13,7 +13,7 @@ const Header = () => {
   useEffect(() => {
     setTimeout(() => {
       if (isLogin) dispatch(getCurrent());
-    }, 300);
+    }, 500);
   }, [dispatch, isLogin]);
 
   useEffect(() => {
