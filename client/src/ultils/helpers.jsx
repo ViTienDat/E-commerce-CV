@@ -45,3 +45,7 @@ export const gennerateRange = (start, end) => {
   const length = end - start + 1;
   return Array.from({ length }, (_, index) => start + index);
 };
+export const formatString = (string) => {
+  if (string.length > 20) return string.slice(0, 19) + "...";
+  else return string;
+};

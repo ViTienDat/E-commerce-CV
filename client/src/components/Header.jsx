@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import path from "../ultils/path";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +10,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLogin, current, mes } = useSelector((state) => state.user);
+  const [isShowOption, setIsShowOption] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
       if (isLogin) dispatch(getCurrent());

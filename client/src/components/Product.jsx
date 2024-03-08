@@ -22,7 +22,7 @@ const Product = ({ data }) => {
         >
           {isShowOption && (
             <div
-              className={`absolute left-0 right-0 bottom-[45%] flex justify-center gap-1 scale-up-center
+              className={`ac absolute left-0 right-0 bottom-[45%] flex justify-center gap-1 scale-up-center
               } `}
             >
               <SelectOption title={"Tùy chọn"} />

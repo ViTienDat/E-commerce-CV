@@ -16,7 +16,13 @@ import {
   Dashboard,
   ManageOrder,
 } from "./pages/admin";
-import { MemberLayout, Personal } from "./pages/member";
+import {
+  MemberLayout,
+  Personal,
+  Mycart,
+  History,
+  Wislist,
+} from "./pages/member";
 import path from "./ultils/path";
 import { getCategories } from "./store/app/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,6 +59,9 @@ function App() {
 
         <Route path={path.MEMBER} element={<MemberLayout />}>
           <Route path={path.PERSONAL} element={<Personal />} />
+          <Route path={path.MY_CART} element={<Mycart />} />
+          <Route path={path.HISTORY} element={<History />} />
+          <Route path={path.WISLIST} element={<Wislist />} />
         </Route>
         <Route path={path.LOGIN} element={<Login />} />
         <Route path={path.ALL} element={<Error />} />

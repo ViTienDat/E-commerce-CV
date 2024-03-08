@@ -1,9 +1,9 @@
 import { BsFillHandbagFill } from "react-icons/bs";
-import { IoSearchSharp } from "react-icons/io5";
+import { IoSearchSharp, IoClose } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
-import { FaLayerGroup } from "react-icons/fa";
-import { BiLogoProductHunt } from "react-icons/bi";
-import { RiBillFill } from "react-icons/ri";
+import { FaLayerGroup, FaRegWindowClose } from "react-icons/fa";
+import { BiLogoProductHunt, BiEdit } from "react-icons/bi";
+import { RiBillFill, RiDeleteBin5Fill } from "react-icons/ri";
 
 const icons = {
   BsFillHandbagFill,
@@ -12,6 +12,10 @@ const icons = {
   FaLayerGroup,
   BiLogoProductHunt,
   RiBillFill,
+  BiEdit,
+  RiDeleteBin5Fill,
+  FaRegWindowClose,
+  IoClose,
 };
 
 export default icons;
