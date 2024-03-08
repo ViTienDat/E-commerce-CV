@@ -3,8 +3,9 @@ const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
 
 const createProduct = asyncHandler(async (req, res) => {
-  const {color, ...body} = req.body
-  if(color) body.color = color.split(" ")
+  const { color, size, ...body } = req.body;
+  if (color) body.color = color.split(",");
+  if (size) body.size = size.split(",");
   if (Object.keys(body).length === 0) {
     throw new Error("Missing input");
   }
@@ -44,20 +45,21 @@ const getProducts = asyncHandler(async (req, res) => {
   queryString.replace(/\b(get|gt|lt|lte)\b/g, (macthedEl) => `$${macthedEl}`);
   const formatQueries = JSON.parse(queryString);
 
-  //filter
-  if (queries?.title)
+  // filter
+  if (queries?.title) {
     formatQueries.title = { $regex: queries.title, $options: "i" };
-  let queryCommand = Product.find(formatQueries);
+  }
+  let queryCommand = Product.find(formatQueries).populate("category", "title");
 
   // sort
   if (req.query.sort) {
     const sortBy = req.query.sort.split(",").join(" ");
-    queryCommand = queryCommand.sort(sortBy);
+    queryCommand = queryCommand.sort(sortBy).populate("category", "title");
   }
   // fields
   if (req.query.fields) {
     const fields = req.query.fields.split(",").join(" ");
-    queryCommand = queryCommand.select(fields);
+    queryCommand = queryCommand.select(fields).populate("category", "title");
   }
 
   // phân trang
@@ -69,7 +71,9 @@ const getProducts = asyncHandler(async (req, res) => {
   //execute query
   queryCommand
     .then(async (response) => {
-      const counts = await Product.find(formatQueries).countDocuments();
+      const counts = await Product.find(formatQueries)
+        .populate("category", "title")
+        .countDocuments();
       return res.status(200).json({
         success: response ? true : false,
         counts,
@@ -84,6 +88,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params;
+
   if (req.body && req.body.title) req.body.slug = slugify(req.body.title);
   const response = await Product.findByIdAndUpdate(pid, req.body, {
     new: true,
