@@ -71,7 +71,13 @@ const getCurrent = asyncHandler(async (req, res) => {
       message: "Missing input",
     });
   }
-  const user = await User.findById(_id).select("-password");
+  const user = await User.findById(_id).select("-password").populate({
+    path: "cart",
+    populate: {
+      path: "product",
+      select: "title thumbnail price"
+    }
+  });
   return res.status(200).json({
     success: user ? true : false,
     data: user ? user : "user not found",
@@ -90,16 +96,15 @@ const getAllUser = asyncHandler(async (req, res) => {
 
   if (queries?.email)
     formatQueries.email = { $regex: queries.email, $options: "i" };
-  if(req?.query?.q) {
-    delete formatQueries.q
+  if (req?.query?.q) {
+    delete formatQueries.q;
     formatQueries["$or"] = [
-      {name: {$regex: req?.query?.q, $options: "i" }},
-      {email: {$regex: req?.query?.q, $options: "i" }},
-      {mobile: {$regex: req?.query?.q, $options: "i" }},
-    ]
+      { name: { $regex: req?.query?.q, $options: "i" } },
+      { email: { $regex: req?.query?.q, $options: "i" } },
+      { mobile: { $regex: req?.query?.q, $options: "i" } },
+    ];
   }
   let queryCommand = User.find(formatQueries);
-
 
   if (req.query.sort) {
     const sortBy = req.query.sort.split(",").join(" ");
@@ -130,38 +135,40 @@ const getAllUser = asyncHandler(async (req, res) => {
     });
 });
 
-const updateUserByAdmin = asyncHandler(async(req, res) => {
-  const {uid} = req.params
-  const response = await User.findByIdAndUpdate( uid, req.body, {new:true} ).select("-password")
+const updateUserByAdmin = asyncHandler(async (req, res) => {
+  const { uid } = req.params;
+  const response = await User.findByIdAndUpdate(uid, req.body, {
+    new: true,
+  }).select("-password");
 
   return res.status(200).json({
     success: response ? true : false,
     data: response ? response : null,
-    message: response ? "update user success" : "update user wrong!"
-  })
-})
+    message: response ? "update user success" : "update user wrong!",
+  });
+});
 
-const deleteUserByAdmin = asyncHandler(async(req, res) => {
-  const {uid} = req.params
-  const response = await User.findByIdAndDelete(uid)
+const deleteUserByAdmin = asyncHandler(async (req, res) => {
+  const { uid } = req.params;
+  const response = await User.findByIdAndDelete(uid);
 
   return res.status(200).json({
     success: response ? true : false,
     data: response ? response : null,
-    message: response ? "delete user success" : "delete user wrong!"
-  })
-})
+    message: response ? "delete user success" : "delete user wrong!",
+  });
+});
 
 const updateCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid, color, size, quantity } = req.body;
-  if (!pid || !quantity || !color || !size) throw new Error("missing input");
+  const { pid, color, size, quantity = 1 } = req.body;
+  if (!pid || !quantity) throw new Error("missing input");
   const cart = await User.findById(_id).select("cart");
   const alreadyProduct = cart?.cart.find(
     (el) =>
-      el.product.toString() === pid &&
-      el.size.toString() === size &&
-      el.color.toString() === color
+      el?.product?.toString() === pid &&
+      el?.size?.toString() === size &&
+      el?.color?.toString() === color
   );
   if (alreadyProduct) {
     const response = await User.updateOne(
@@ -186,6 +193,38 @@ const updateCart = asyncHandler(async (req, res) => {
   }
 });
 
+const removeCart = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { pid } = req.params;
+  const response = await User.findByIdAndUpdate(
+    _id,
+    { $pull: { cart: {_id: pid} } },
+    { new: true }
+  );
+  return res.status(200).json({
+      success: response ? true : false,
+      data: response ? response : null,
+      message: response ? "Remove product success!" : "Remove product wrong"
+    });
+});
+
+const updateUser = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { name, email, mobile } = req.body;
+  if (!name || !email || !mobile) throw new Error("missing input");
+  const response = await User.findByIdAndUpdate(
+    _id,
+    { name, email, mobile },
+    { new: true }
+  ).select("-password -role");
+  return res.status(200).json({
+    success: response ? true : false,
+    data: response ? response : null,
+    message: response ? "Update user success" : "Update user wrong",
+  });
+});
+
+
 module.exports = {
   register,
   login,
@@ -194,5 +233,7 @@ module.exports = {
   updateCart,
   getAllUser,
   updateUserByAdmin,
-  deleteUserByAdmin
+  deleteUserByAdmin,
+  updateUser,
+  removeCart
 };

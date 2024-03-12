@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
+const Category = require("../models/productCategory");
 
 const createProduct = asyncHandler(async (req, res) => {
   const { color, size, ...body } = req.body;
@@ -35,7 +36,11 @@ const getProduct = asyncHandler(async (req, res) => {
 
 const getProducts = asyncHandler(async (req, res) => {
   const queries = { ...req.query };
-
+  if(!queries.category || queries.category == "all") {
+    delete queries.category
+  } else {
+    queries.category = await Category.findOne({title: queries.category}).select("_id")
+  }
   // tách các trường đặc biệt
   const excludeFields = ["limit", "sort", "page", "fields"];
   excludeFields.forEach((el) => delete queries[el]);
@@ -49,6 +54,7 @@ const getProducts = asyncHandler(async (req, res) => {
   if (queries?.title) {
     formatQueries.title = { $regex: queries.title, $options: "i" };
   }
+
   let queryCommand = Product.find(formatQueries).populate("category", "title");
 
   // sort
@@ -88,9 +94,14 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params;
-
-  if (req.body && req.body.title) req.body.slug = slugify(req.body.title);
-  const response = await Product.findByIdAndUpdate(pid, req.body, {
+  const { color, size, ...body } = req.body;
+  if (color) body.color = color.split(",");
+  if (size) body.size = size.split(",");
+  if (Object.keys(body).length === 0) {
+    throw new Error("Missing input");
+  }
+  if (body && body.title) body.slug = slugify(body.title);
+  const response = await Product.findByIdAndUpdate(pid, body, {
     new: true,
   });
   return res.status(200).json({
