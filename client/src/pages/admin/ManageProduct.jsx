@@ -37,9 +37,7 @@ const ManageProduct = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const handleSearchProduct = (data) => {
-    console.log(data);
-  };
+  const handleSearchProduct = (data) => {};
   const fetchProducts = async (params) => {
     const response = await apiGetProducts({
       ...params,
@@ -81,7 +79,6 @@ const ManageProduct = () => {
       if (result.isConfirmed) {
         const response = await apiDeleteProduct(pid);
         if (response?.success) {
-          console.log(response);
           toast.success(response.message);
           render();
         } else {

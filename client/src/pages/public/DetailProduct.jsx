@@ -1,13 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
 import { apiGetProduct } from "../../apis/product";
 import Slider from "react-slick";
 import { formatMoney } from "../../ultils/helpers";
-import { SelectQuantity } from "../../components";
+import { SelectQuantity, Loading } from "../../components";
 import { Size } from "../../components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../store/app/appSlice";
+import { apiUpdateCart } from "../../apis";
+import { colorBoard } from "../../ultils/contants";
+import { TiTick } from "react-icons/ti";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+import { getCurrent } from "../../store/user/asyncActions";
 
 const settings = {
   dots: false,
@@ -18,11 +25,14 @@ const settings = {
 };
 
 const DetailProduct = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isActive, setIsActive] = useState("S");
-  const [showImgSize, setShowImgSize] = useState(false);
+  const [isActiveSize, setIsActiveSize] = useState(null);
+  const [color, setColor] = useState(null);
   const [productData, setProductData] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [changeThumb, setChangeThumb] = useState(productData?.thumbnail);
+  const { current } = useSelector((state) => state.user);
   const { pid, title } = useParams();
   const fetchProductData = async () => {
     const response = await apiGetProduct(pid);
@@ -53,8 +63,64 @@ const DetailProduct = () => {
     },
     [quantity]
   );
+
+  const handleUpdateCart = async () => {
+    if (!current) {
+      Swal.fire({
+        title: "Almost...",
+        text: "Please login first!",
+        icon: "info",
+        showCancelButton: true,
+        cancelButtonText: "Cancel!",
+        confirmButtonText: "Go Login",
+      }).then((rs) => {
+        if (rs.isConfirmed) {
+          navigate(`/${path.LOGIN}`);
+        }
+      });
+    }
+    let err = 0;
+    if (productData?.color.length > 1 && !color) {
+      Swal.fire({
+        title: "Missing input",
+        icon: "error",
+        text: "Need to enter color!",
+      });
+      err++;
+    }
+    if (productData?.size.length > 1 && !isActiveSize) {
+      Swal.fire({
+        title: "Missing input",
+        icon: "error",
+        text: "Need to enter size!",
+      });
+      err++;
+    }
+    if (err == 0) {
+      const data = {};
+      data.pid = productData?._id;
+      data.quantity = quantity;
+      if (color) {
+        data.color = color;
+      }
+      if (isActiveSize) {
+        data.size = isActiveSize;
+      }
+      dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+      const response = await apiUpdateCart(data);
+      dispatch(showModal({ isShowModal: false, modalChildren: null }));
+      if (response?.success) {
+        toast.success(response.message);
+        dispatch(getCurrent());
+      } else {
+        toast.error(response.message);
+      }
+    }
+  };
+
   return (
     <div className="w-full">
+      <ToastContainer />
       <div className="bg-[#f5f5f5] py-[15px] flex justify-center">
         <div className="w-main flex text-[14px]">
           <Link to={path.HOME}>
@@ -70,25 +136,17 @@ const DetailProduct = () => {
       </div>
       <div className="flex m-auto w-main my-[35px] gap-[30px]">
         <div className="w-[40%] flex flex-col gap-4">
-          {/* <div className="image-magnify w">
-            <SideBySideMagnifier
-              imageSrc={productData?.thumbnail}
-              imageAlt="Main Image"
-              largeImageSrc={productData?.thumbnail} // Optional
-              alwaysInPlace={false}
-              inPlaceMinBreakpoint={true}
-            />
-          </div> */}
-          <img src={productData?.thumbnail} alt="thumbnail" />
+          <img src={changeThumb || productData?.thumbnail} alt="thumbnail" />
           {productData?.images.length > 1 && (
             <div className="w-full">
               <Slider {...settings} className="img-slider">
                 {productData?.images?.map((el) => (
                   <div key={el} className="p-2">
                     <img
+                      onClick={() => setChangeThumb(el)}
                       src={el}
                       alt="image product"
-                      className="object-contain w-[80px] h-[80px] "
+                      className="object-contain w-[80px] h-[80px] cursor-pointer"
                     />
                   </div>
                 ))}
@@ -114,33 +172,47 @@ const DetailProduct = () => {
             <span>{productData?.description}</span>
           </div>
           <div className="flex flex-col my-[20px]">
-            <span>Kích thước</span>
-            <div className="flex gap-3">
-              <button
-                className={`border h-10 w-10 ${isActive === "S" && "bg-main"}`}
-                onClick={() => setIsActive("S")}
-              >
-                S
-              </button>
-              <button
-                className={`border h-10 w-10 ${isActive === "M" && "bg-main"}`}
-                onClick={() => setIsActive("M")}
-              >
-                M
-              </button>
-              <button
-                className={`border h-10 w-10 ${isActive === "L" && "bg-main"}`}
-                onClick={() => setIsActive("L")}
-              >
-                L
-              </button>
-              <button
-                className={`border h-10 w-10 ${isActive === "XL" && "bg-main"}`}
-                onClick={() => setIsActive("XL")}
-              >
-                XL
-              </button>
-            </div>
+            {productData?.color?.length > 1 && (
+              <div className="flex flex-col gap-4 bg-">
+                <span>Màu sắc</span>
+                <div className="flex gap-2">
+                  {productData.color.map((el) => (
+                    <span
+                      key={el}
+                      onClick={() => setColor(el)}
+                      title={el}
+                      className={`h-8 w-8 cursor-pointer flex text-white items-center justify-center border-2  ${
+                        el == "white" && el == color && "bg-slate-500"
+                      } ${colorBoard.find((cl) => cl.name == el)?.color}`}
+                    >
+                      {color == el && <TiTick size={18} />}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col my-[20px]">
+            {productData?.size.length > 1 && (
+              <div className="flex flex-col gap-4">
+                <span>Kích thước</span>
+                <div className="flex gap-3">
+                  {productData.size.map((el) => (
+                    <span
+                      key={el}
+                      onClick={() => setIsActiveSize(el)}
+                      className={`w-10 h-10 flex items-center justify-center ${
+                        isActiveSize === el
+                          ? "bg-main text-white cursor-default"
+                          : "border cursor-pointer"
+                      } `}
+                    >
+                      {el.toUpperCase()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="w-main pt-8 pb-4 ">
               {productData?.category.title !== "bottom" &&
               productData?.category.title !== "accessories" ? (
@@ -174,7 +246,10 @@ const DetailProduct = () => {
                 handleQuantity={handleQuantity}
                 handleChangeQuantity={handleChangeQuantity}
               />
-              <button className="text-white bg-main py-3 px-8 mx-5 font-semibold hover:bg-main2 text-[13px]">
+              <button
+                onClick={() => handleUpdateCart()}
+                className="text-white bg-main py-3 px-8 mx-5 font-semibold hover:bg-main2 text-[13px]"
+              >
                 THÊM VÀO GIỎ HÀNG
               </button>
             </div>

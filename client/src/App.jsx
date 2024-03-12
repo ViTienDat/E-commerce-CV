@@ -6,7 +6,7 @@ import {
   Products,
   Contact,
   DetailProduct,
-  Account,
+  DetailCart,
 } from "./pages/public";
 import {
   AdminLayout,
@@ -27,23 +27,34 @@ import path from "./ultils/path";
 import { getCategories } from "./store/app/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Modal } from "./components";
+import { Modal, Cart } from "./components";
+import { showCart } from "./store/app/appSlice";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
   }, []);
-  const { isShowModal, modalChildren } = useSelector((state) => state.app);
+  const { isShowModal, modalChildren, isShowCart } = useSelector(
+    (state) => state.app
+  );
   return (
     <div className="font-main relative">
+      {isShowCart && (
+        <div
+          onClick={() => dispatch(showCart({ signal: false }))}
+          className="fixed inset-0 bg-overlay z-50 flex justify-end"
+        >
+          <Cart />
+        </div>
+      )}
       {isShowModal && <Modal>{modalChildren}</Modal>}
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.PRODUCTS__CATEGORY} element={<Products />} />
           <Route path={path.CONTACT} element={<Contact />} />
-          <Route path={path.ACCOUNT} element={<Account />} />
+          <Route path={path.DETAIL_CART} element={<DetailCart />} />
           <Route
             path={path.DETAIL_PRODUCT__PID__TITLE}
             element={<DetailProduct />}

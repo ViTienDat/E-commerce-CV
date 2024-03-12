@@ -25,7 +25,7 @@ const Product = ({ data }) => {
               className={`ac absolute left-0 right-0 bottom-[45%] flex justify-center gap-1 scale-up-center
               } `}
             >
-              <SelectOption title={"Tùy chọn"} />
+              <SelectOption title={"Chi tiết"} />
               <SelectOption title={"Yêu thích"} />
             </div>
           )}

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-const SearchItem = ({ value, changeValue, options }) => {
+const SortItem = ({ value, changeValue, options }) => {
   return (
     <div>
       <select
@@ -20,4 +20,4 @@ const SearchItem = ({ value, changeValue, options }) => {
   );
 };
 
-export default memo(SearchItem);
+export default memo(SortItem);

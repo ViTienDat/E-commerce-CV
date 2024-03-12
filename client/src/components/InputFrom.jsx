@@ -15,7 +15,11 @@ const InputFrom = ({
 }) => {
   return (
     <div className="flex flex-col h-[30px] gap-2">
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && (
+        <label className="font-medium" htmlFor={id}>
+          {label}
+        </label>
+      )}
       <input
         type={type}
         id={id}

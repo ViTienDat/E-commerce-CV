@@ -29,12 +29,12 @@ export const selectOption = [
   },
   {
     id: 2,
-    value: "-title",
+    value: "title",
     text: "A-Z",
   },
   {
     id: 3,
-    value: "title",
+    value: "-title",
     text: "Z-A",
   },
   {
@@ -127,5 +127,40 @@ export const memberSidebar = [
     text: "History buy",
     path: `/${path.MEMBER}/${path.HISTORY}`,
     icon: <RiBillFill size={20} />,
+  },
+];
+
+export const colorBoard = [
+  {
+    name: "black",
+    color: "bg-black",
+  },
+  {
+    name: "red",
+    color: "bg-red-500",
+  },
+  {
+    name: "white",
+    color: "bg-white",
+  },
+  {
+    name: "pink",
+    color: "bg-pink-500",
+  },
+  {
+    name: "mint",
+    color: "bg-cyan-500",
+  },
+  {
+    name: "blue",
+    color: "bg-blue-500",
+  },
+  {
+    name: "yellow",
+    color: "bg-yellow-500",
+  },
+  {
+    name: "tan",
+    color: "bg-orange-400",
   },
 ];

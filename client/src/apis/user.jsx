@@ -29,13 +29,40 @@ export const apiGetUsers = (params) =>
 
 export const apiUpdateUser = (data, uid) =>
   axios({
-    url: "/user/" + uid,
+    url: "/user/updateadmin/" + uid,
+    method: "put",
+    data,
+  });
+
+export const apiUpdateCurrent = (data) =>
+  axios({
+    url: "/user/updatecurrent",
     method: "put",
     data,
   });
 
 export const apiDeleteUser = (uid) =>
   axios({
-    url: "/user/" + uid,
+    url: "/user/deletebyadmin/" + uid,
     method: "delete",
   });
+
+export const apiUpdateCart = (data) =>
+  axios({
+    url: "/user/cart",
+    method: "put",
+    data,
+  });
+
+export const apiRemoveCart = (pid) =>
+  axios({
+    url: "/user/remove-cart/" + pid,
+    method: "delete",
+  });
+
+// export const apiUpdateWislist = (data) =>
+//   axios({
+//     url: "/user/cart",
+//     method: "put",
+//     data,
+//   });
