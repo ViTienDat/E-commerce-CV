@@ -10,6 +10,8 @@ router.get("/logout" ,controller.logout )
 router.put("/cart", verifyAccessToken, controller.updateCart)
 router.delete("/remove-cart/:pid", verifyAccessToken, controller.removeCart)
 router.put("/updatecurrent", verifyAccessToken, controller.updateUser)
+router.put("/update-wislist/:pid", verifyAccessToken, controller.updateWislist)
+router.delete("/remove-wislist/:pid", verifyAccessToken, controller.removeWislist)
 router.delete("/deletebyadmin/:uid", [verifyAccessToken, isAdmin], controller.deleteUserByAdmin)
 router.put("/updateadmin/:uid", [verifyAccessToken, isAdmin] ,controller.updateUserByAdmin )
 

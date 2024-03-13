@@ -71,13 +71,22 @@ const getCurrent = asyncHandler(async (req, res) => {
       message: "Missing input",
     });
   }
-  const user = await User.findById(_id).select("-password").populate({
-    path: "cart",
-    populate: {
-      path: "product",
-      select: "title thumbnail price slug"
-    }
-  });
+  const user = await User.findById(_id)
+    .select("-password")
+    .populate({
+      path: "cart",
+      populate: {
+        path: "product",
+        select: "title thumbnail price slug",
+      },
+    })
+    .populate({
+      path: "wislist",
+      populate: {
+        path: "product",
+        select: "title thumbnail price slug",
+      },
+    })
   return res.status(200).json({
     success: user ? true : false,
     data: user ? user : "user not found",
@@ -198,14 +207,14 @@ const removeCart = asyncHandler(async (req, res) => {
   const { pid } = req.params;
   const response = await User.findByIdAndUpdate(
     _id,
-    { $pull: { cart: {_id: pid} } },
+    { $pull: { cart: { _id: pid } } },
     { new: true }
   );
   return res.status(200).json({
-      success: response ? true : false,
-      data: response ? response : null,
-      message: response ? "Remove product success!" : "Remove product wrong"
-    });
+    success: response ? true : false,
+    data: response ? response : null,
+    message: response ? "Remove product success!" : "Remove product wrong",
+  });
 });
 
 const updateUser = asyncHandler(async (req, res) => {
@@ -224,6 +233,35 @@ const updateUser = asyncHandler(async (req, res) => {
   });
 });
 
+const updateWislist = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { pid } = req.params;
+  if (!pid) throw new Error("Missing input");
+  const response = await User.findByIdAndUpdate(
+    _id,
+    { $push: { wislist: { product: pid } } },
+    { new: true }
+  );
+  return res.status(200).json({
+    success: response ? true : false,
+    data: response ? response : null,
+  });
+});
+
+const removeWislist = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { pid } = req.params;
+  if (!pid) throw new Error("Missing input");
+  const response = await User.findByIdAndUpdate(
+    _id,
+    { $pull: { wislist: {_id: pid}} },
+    { multi: true  }
+  );
+  return res.status(200).json({
+    success: response ? true : false,
+    data: response ? response : null,
+  });
+});
 
 module.exports = {
   register,
@@ -235,5 +273,7 @@ module.exports = {
   updateUserByAdmin,
   deleteUserByAdmin,
   updateUser,
-  removeCart
+  removeCart,
+  updateWislist,
+  removeWislist
 };
