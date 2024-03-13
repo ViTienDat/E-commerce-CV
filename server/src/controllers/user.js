@@ -75,7 +75,7 @@ const getCurrent = asyncHandler(async (req, res) => {
     path: "cart",
     populate: {
       path: "product",
-      select: "title thumbnail price"
+      select: "title thumbnail price slug"
     }
   });
   return res.status(200).json({
