@@ -8,13 +8,16 @@ import { SelectQuantity, Loading } from "../../components";
 import { Size } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../store/app/appSlice";
-import { apiUpdateCart } from "../../apis";
+import { apiRemoveWislist, apiUpdateCart, apiUpdateWislist } from "../../apis";
 import { colorBoard } from "../../ultils/contants";
 import { TiTick } from "react-icons/ti";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { getCurrent } from "../../store/user/asyncActions";
+import icons from "../../ultils/icons";
+
+const { IoIosHeartEmpty, BsCartPlus, IoHeartDislikeOutline } = icons;
 
 const settings = {
   dots: false,
@@ -115,6 +118,27 @@ const DetailProduct = () => {
       } else {
         toast.error(response.message);
       }
+    }
+  };
+
+  const handdleUpdateWislist = async (pid) => {
+    const response = await apiUpdateWislist(pid);
+    if (response?.success) {
+      toast.success("Success");
+      dispatch(getCurrent());
+    } else {
+      toast.error(response.message);
+    }
+  };
+
+  const handdleRemoveWislist = async (pid) => {
+    const response = await apiRemoveWislist(pid);
+    console.log(response);
+    if (response?.success) {
+      toast.success("Success");
+      dispatch(getCurrent());
+    } else {
+      toast.error(response.message);
     }
   };
 
@@ -238,20 +262,52 @@ const DetailProduct = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-col">
+
+          <div className="flex flex-col mb-5">
             <div className="mb-[15px]">Số lượng:</div>
             <div className="flex">
+              <div className="flex h-10"></div>
               <SelectQuantity
                 quantity={quantity}
                 handleQuantity={handleQuantity}
                 handleChangeQuantity={handleChangeQuantity}
               />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex gap-5">
               <button
                 onClick={() => handleUpdateCart()}
-                className="text-white bg-main py-3 px-8 mx-5 font-semibold hover:bg-main2 text-[13px]"
+                className="flex justify-center gap-2 items-center text-white transition-colors duration-200 bg-main py-3 w-[250px] font-semibold hover:bg-main2 text-[13px]"
               >
+                <BsCartPlus size={20} />
                 THÊM VÀO GIỎ HÀNG
               </button>
+              {current?.wislist.find(
+                (el) => el?.product?._id == productData?._id
+              ) ? (
+                <div
+                  onClick={() =>
+                    handdleRemoveWislist(
+                      current?.wislist.find(
+                        (el) => el?.product?._id == productData?._id
+                      )?._id
+                    )
+                  }
+                  className="flex gap-2 items-center text-[13px] font-semibold justify-center cursor-pointer w-[250px] bg-main hover:bg-main2 text-white transition-colors duration-200"
+                >
+                  <IoHeartDislikeOutline size={20} />
+                  BỎ THÍCH
+                </div>
+              ) : (
+                <div
+                  onClick={() => handdleUpdateWislist(productData?._id)}
+                  className="flex gap-2 items-center text-[13px] font-semibold justify-center cursor-pointer w-[250px] bg-main hover:bg-main2 text-white transition-colors duration-200"
+                >
+                  <IoIosHeartEmpty size={20} />
+                  YÊU THÍCH
+                </div>
+              )}
             </div>
           </div>
         </div>

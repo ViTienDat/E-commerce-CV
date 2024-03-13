@@ -27,15 +27,15 @@ import path from "./ultils/path";
 import { getCategories } from "./store/app/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Modal, Cart } from "./components";
-import { showCart } from "./store/app/appSlice";
+import { Modal, Cart, WislistBar } from "./components";
+import { showCart, showWislist } from "./store/app/appSlice";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
   }, []);
-  const { isShowModal, modalChildren, isShowCart } = useSelector(
+  const { isShowModal, modalChildren, isShowCart, isShowWislist } = useSelector(
     (state) => state.app
   );
 
@@ -47,6 +47,14 @@ function App() {
           className="fixed inset-0 bg-overlay z-50 flex justify-end"
         >
           <Cart />
+        </div>
+      )}
+      {isShowWislist && (
+        <div
+          onClick={() => dispatch(showWislist({ signal: false }))}
+          className="fixed inset-0 bg-overlay z-50 flex justify-end"
+        >
+          <WislistBar />
         </div>
       )}
       {isShowModal && <Modal>{modalChildren}</Modal>}

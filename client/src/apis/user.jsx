@@ -60,9 +60,14 @@ export const apiRemoveCart = (pid) =>
     method: "delete",
   });
 
-// export const apiUpdateWislist = (data) =>
-//   axios({
-//     url: "/user/cart",
-//     method: "put",
-//     data,
-//   });
+export const apiUpdateWislist = (pid) =>
+  axios({
+    url: "/user/update-wislist/" + pid,
+    method: "put",
+  });
+
+export const apiRemoveWislist = (pid) =>
+  axios({
+    url: "/user/remove-wislist/" + pid,
+    method: "delete",
+  });

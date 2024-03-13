@@ -5,7 +5,7 @@ import { navigations } from "../ultils/contants";
 import { NavLink } from "react-router-dom";
 import path from "../ultils/path";
 import { useSelector, useDispatch } from "react-redux";
-import { showCart } from "../store/app/appSlice";
+import { showCart, showWislist } from "../store/app/appSlice";
 
 const { BsFillHandbagFill, FaHeart } = icons;
 const activeStyle = "px-4 font-semibold text-[14px] text-main";
@@ -39,16 +39,26 @@ const Navigation = () => {
         <div className="">
           {current && (
             <div className="flex gap-6">
-              <span>
+              <span
+                className="hover:text-red-500 cursor-pointer relative"
+                onClick={() => dispatch(showWislist({ signal: true }))}
+              >
+                {current.wislist.length > 0 && (
+                  <span className="top-[-11px] left-3 absolute text-white text-[13px] h-5 w-5 justify-center items-center flex bg-main2 rounded-full">
+                    {current.wislist.length}
+                  </span>
+                )}
                 <FaHeart size={20} />
               </span>
               <span
                 className="hover:text-red-500 cursor-pointer relative"
                 onClick={() => dispatch(showCart({ signal: true }))}
               >
-                <span className="top-[-11px] left-3 absolute text-white text-[13px] h-5 w-5 justify-center items-center flex bg-main2 rounded-full">
-                  {current.cart.length}
-                </span>
+                {current.cart.length > 0 && (
+                  <span className="top-[-11px] left-3 absolute text-white text-[13px] h-5 w-5 justify-center items-center flex bg-main2 rounded-full">
+                    {current.cart.length}
+                  </span>
+                )}
                 <BsFillHandbagFill size={18} />
               </span>
             </div>
