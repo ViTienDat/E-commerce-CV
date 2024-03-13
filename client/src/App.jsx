@@ -38,6 +38,7 @@ function App() {
   const { isShowModal, modalChildren, isShowCart } = useSelector(
     (state) => state.app
   );
+
   return (
     <div className="font-main relative">
       {isShowCart && (

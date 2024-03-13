@@ -61,10 +61,10 @@ const Products = () => {
     <div className="flex flex-col w-full gap-8">
       <div className="text-[14px] bg-[#f5f5f5] py-[15px]">
         <div className="w-main m-auto">
-          <Link to={path.HOME}>
+          <Link to={`/`}>
             <span className="hover:text-main">Trang chủ </span>
           </Link>
-          / <span className="text-main">Products</span>
+          / <span className="text-main">{category}</span>
         </div>
       </div>
       <div className="flex w-main m-auto">

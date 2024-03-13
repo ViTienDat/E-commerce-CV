@@ -163,4 +163,8 @@ export const colorBoard = [
     name: "tan",
     color: "bg-orange-400",
   },
+  {
+    name: "gray",
+    color: "bg-gray-500",
+  },
 ];

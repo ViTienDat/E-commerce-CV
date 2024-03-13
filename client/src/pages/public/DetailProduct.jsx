@@ -110,7 +110,7 @@ const DetailProduct = () => {
       const response = await apiUpdateCart(data);
       dispatch(showModal({ isShowModal: false, modalChildren: null }));
       if (response?.success) {
-        toast.success(response.message);
+        toast.success("Update to cart");
         dispatch(getCurrent());
       } else {
         toast.error(response.message);
@@ -123,11 +123,11 @@ const DetailProduct = () => {
       <ToastContainer />
       <div className="bg-[#f5f5f5] py-[15px] flex justify-center">
         <div className="w-main flex text-[14px]">
-          <Link to={path.HOME}>
+          <Link to={`/`}>
             <h3 className="hover:text-main"> Trang chủ </h3>
           </Link>
           <span className="px-2"> / </span>
-          <Link to={`${path.PRODUCTS}/all`}>
+          <Link to={`/${path.PRODUCTS}/all`}>
             <h3 className="hover:text-main"> ALL ITEMS</h3>
           </Link>
           <span className="px-2"> / </span>

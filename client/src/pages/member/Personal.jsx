@@ -102,7 +102,7 @@ const Personal = () => {
         <div className="w-full flex justify-end">
           {isDirty ? (
             <button
-              className=" text-white px-8 py-2 bg-main hover:bg-main2"
+              className=" text-white px-8 py-2 bg-main transition-colors duration-200 hover:bg-main2"
               type="submit"
             >
               Update information

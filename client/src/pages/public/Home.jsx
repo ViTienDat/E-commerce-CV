@@ -42,7 +42,7 @@ const Home = () => {
 
       <div className="w-full flex items-center justify-center my-8">
         <Link to={`${path.PRODUCTS}/all`}>
-          <span className="px-10 py-2 bg-main text-[14px] text-white hover:bg-main2 ">
+          <span className="px-10 py-2 transition-colors duration-200 bg-main text-[14px] text-white hover:bg-main2 ">
             Xem tất cả
           </span>
         </Link>
