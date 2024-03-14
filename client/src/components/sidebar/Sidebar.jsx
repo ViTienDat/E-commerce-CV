@@ -8,6 +8,16 @@ const Sidebar = () => {
     <div>
       <div className="flex flex-col">
         <div className="font-bold pb-[15px] ">DANH MỤC SẢN PHẨM</div>
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? " text-main py-[10px] pr-[10px] text-[14px]"
+              : "py-[10px] pr-[10px] text-[14px] hover:text-main"
+          }
+          to={`/product/all`}
+        >
+          ALL
+        </NavLink>
         {categories?.map((el) => (
           <NavLink
             className={({ isActive }) =>

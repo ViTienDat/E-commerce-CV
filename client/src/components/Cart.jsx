@@ -7,7 +7,7 @@ import { apiRemoveCart } from "../apis";
 import { getCurrent } from "../store/user/asyncActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import path from "../ultils/path";
 
 const { IoClose, RiDeleteBin5Fill, GrFormNextLink } = icons;
@@ -114,10 +114,12 @@ const Cart = () => {
             SHOPPING CART
             <GrFormNextLink size={18} />
           </button>
-          <button className="w-full py-2 transition-colors duration-200 flex items-center justify-center bg-main hover:bg-main2">
-            CHECK OUT
-            <GrFormNextLink size={18} />
-          </button>
+          <Link to={`/${path.CHECKOUT}`}>
+            <button className="w-full py-2 transition-colors duration-200 flex items-center justify-center bg-main hover:bg-main2">
+              CHECKOUT
+              <GrFormNextLink size={18} />
+            </button>
+          </Link>
         </div>
       </div>
     </div>

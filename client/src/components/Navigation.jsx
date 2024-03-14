@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo.webp";
 import icons from "../ultils/icons";
 import { navigations } from "../ultils/contants";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import path from "../ultils/path";
 import { useSelector, useDispatch } from "react-redux";
 import { showCart, showWislist } from "../store/app/appSlice";
 
-const { BsFillHandbagFill, FaHeart } = icons;
+const { BsFillHandbagFill, FaHeart, FaCaretDown } = icons;
 const activeStyle = "px-4 font-semibold text-[14px] text-main";
 const notActiveStyle = "px-4 font-semibold text-[14px] hover:text-main";
 
 const Navigation = () => {
   const dispatch = useDispatch();
   const { current } = useSelector((state) => state.user);
+
   return (
     <div className="w-main flex flex-col">
       <div className="flex items-center h-[100px] justify-center ">
@@ -22,7 +23,7 @@ const Navigation = () => {
         </NavLink>
       </div>
       <div className="h-[55px] border-t flex justify-between items-center">
-        <div>
+        <div className="flex">
           {navigations.map((el) => (
             <NavLink
               to={el.path}

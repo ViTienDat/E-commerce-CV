@@ -122,12 +122,27 @@ const DetailProduct = () => {
   };
 
   const handdleUpdateWislist = async (pid) => {
-    const response = await apiUpdateWislist(pid);
-    if (response?.success) {
-      toast.success("Success");
-      dispatch(getCurrent());
+    if (!current) {
+      Swal.fire({
+        title: "Almost...",
+        text: "Please login first!",
+        icon: "info",
+        showCancelButton: true,
+        cancelButtonText: "Cancel!",
+        confirmButtonText: "Go Login",
+      }).then((rs) => {
+        if (rs.isConfirmed) {
+          navigate(`/${path.LOGIN}`);
+        }
+      });
     } else {
-      toast.error(response.message);
+      const response = await apiUpdateWislist(pid);
+      if (response?.success) {
+        toast.success("Success");
+        dispatch(getCurrent());
+      } else {
+        toast.error(response.message);
+      }
     }
   };
 

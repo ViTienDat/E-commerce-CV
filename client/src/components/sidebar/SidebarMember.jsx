@@ -17,12 +17,12 @@ const SidebarMember = () => {
   };
   return (
     <div className="bg-white h-full">
-      <div className="flex flex-col gap-8 w-full">
+      <div className="flex flex-col gap-5 w-full">
         <div className="flex justify-center items-center flex-col py-4">
           <Link to={`/${path.HOME}`}>
             <img src={logo} alt="logo" />
           </Link>
-          <div>Admin Workspace</div>
+          <div>Member Workspace</div>
         </div>
         <div>
           {memberSidebar?.map((el) => (

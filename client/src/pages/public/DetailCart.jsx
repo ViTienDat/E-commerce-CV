@@ -162,7 +162,10 @@ const DetailCart = () => {
               </span>
             </div>
             <div>
-              <button className="w-full py-2 transition-colors text-white duration-200 flex items-center justify-center bg-main hover:bg-main2">
+              <button
+                onClick={() => navigate(`/${path.CHECKOUT}`)}
+                className="w-full py-2 transition-colors text-white duration-200 flex items-center justify-center bg-main hover:bg-main2"
+              >
                 CHECK OUT
                 <GrFormNextLink size={18} />
               </button>

@@ -22,6 +22,7 @@ import {
   Mycart,
   History,
   Wislist,
+  CheckOut,
 } from "./pages/member";
 import path from "./ultils/path";
 import { getCategories } from "./store/app/asyncActions";
@@ -59,6 +60,7 @@ function App() {
       )}
       {isShowModal && <Modal>{modalChildren}</Modal>}
       <Routes>
+        <Route path={path.CHECKOUT} element={<CheckOut />} />
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.PRODUCTS__CATEGORY} element={<Products />} />

@@ -16,7 +16,7 @@ export const navigations = [
   },
   {
     id: 3,
-    value: "CONTACT",
+    value: "ACCOUNT-TEST",
     path: `${path.CONTACT}`,
   },
 ];
