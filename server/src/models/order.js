@@ -14,6 +14,11 @@ var orderSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  payment: {
+    type: String,
+    require: true,
+    enum: ["qr", "cod"]
+  },
   status: {
     type: String,
     default: "Processing",
@@ -24,6 +29,8 @@ var orderSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
+}, {
+  timestamps: true
 });
 
 //Export the model
