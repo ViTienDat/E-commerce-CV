@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Product, Sidebar, SortItem, Pagination } from "../../components";
+import {
+  Product,
+  Sidebar,
+  SortItem,
+  Pagination,
+  Loading,
+} from "../../components";
 import {
   Link,
   createSearchParams,
@@ -7,12 +13,13 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import path from "../../ultils/path";
 import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
 import { selectOption } from "../../ultils/contants";
 import icons from "../../ultils/icons";
+import { showModal } from "../../store/app/appSlice";
 
 const { IoSearchSharp } = icons;
 
@@ -24,13 +31,16 @@ const breakpointColumnsObj = {
 };
 
 const Products = () => {
+  const dispatch = useDispatch();
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const [sort, setSort] = useState("");
   const [Products, setProducts] = useState(null);
   const { category } = useParams();
   const fetchProductByCategory = async (queries) => {
+    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await apiGetProducts({ ...queries, category });
+    dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) setProducts(response);
     window.scrollTo(0, 0);
   };
@@ -72,20 +82,15 @@ const Products = () => {
           <Sidebar />
         </div>
         <div className="w-3/4">
-          <div className="flex flex-col gap-4 mx-0 mt-[15px] mb-[30px] border-b pb-[15px]">
+          <div className="flex justify-between gap-4 mx-0 mt-[15px] mb-[30px] border-b pb-[15px]">
             <span className="text-[18px] font-bold">Tất cả sản phẩm</span>
-            <div className="flex justify-between items-center">
-              <div>
-                <IoSearchSharp size={20} />
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-[14px]">Sắp xếp: </span>
-                <SortItem
-                  value={sort}
-                  changeValue={changeValue}
-                  options={selectOption}
-                />
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="text-[14px]">Sắp xếp: </span>
+              <SortItem
+                value={sort}
+                changeValue={changeValue}
+                options={selectOption}
+              />
             </div>
           </div>
           <Masonry

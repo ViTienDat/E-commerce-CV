@@ -1,14 +1,14 @@
 import React from "react";
-import icons from "../ultils/icons";
+import icons from "../../ultils/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { showCart } from "../store/app/appSlice";
-import { formatMoney } from "../ultils/helpers";
-import { apiRemoveCart } from "../apis";
-import { getCurrent } from "../store/user/asyncActions";
+import { showCart } from "../../store/app/appSlice";
+import { formatMoney } from "../../ultils/helpers";
+import { apiRemoveCart } from "../../apis";
+import { getCurrent } from "../../store/user/asyncActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
-import path from "../ultils/path";
+import path from "../../ultils/path";
 
 const { IoClose, RiDeleteBin5Fill, GrFormNextLink } = icons;
 
@@ -28,7 +28,7 @@ const Cart = () => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="w-[350px] h-screen bg-gray-100 flex flex-col"
+      className="w-[350px] h-screen bg-gray-100 flex flex-col scale-up-hor-right"
     >
       <ToastContainer />
       <h2 className="p-4 border-b font-bold text-xl flex justify-between items-center h-[10%] ">
@@ -55,6 +55,7 @@ const Cart = () => {
                     navigate(
                       `/${path.DETAIL_PRODUCT}/${el.product._id}/${el.product.slug}`
                     );
+                    dispatch(showCart({ signal: false }));
                   }}
                 />
                 <div className="flex flex-col w-full justify-between">
@@ -114,12 +115,17 @@ const Cart = () => {
             SHOPPING CART
             <GrFormNextLink size={18} />
           </button>
-          <Link to={`/${path.CHECKOUT}`}>
-            <button className="w-full py-2 transition-colors duration-200 flex items-center justify-center bg-main hover:bg-main2">
-              CHECKOUT
-              <GrFormNextLink size={18} />
-            </button>
-          </Link>
+
+          <button
+            onClick={() => {
+              navigate(`/${path.CHECKOUT}`);
+              dispatch(showCart({ signal: false }));
+            }}
+            className="w-full py-2 transition-colors duration-200 flex items-center justify-center bg-main hover:bg-main2"
+          >
+            CHECKOUT
+            <GrFormNextLink size={18} />
+          </button>
         </div>
       </div>
     </div>

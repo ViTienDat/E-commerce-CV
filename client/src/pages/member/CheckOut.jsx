@@ -1,21 +1,87 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { formatMoney } from "../../ultils/helpers";
 import icons from "../../ultils/icons";
 import path from "../../ultils/path";
+import checkoutLogo from "../../assets/checkout_logo.webp";
+import { apiCreateOrder } from "../../apis";
+import { getCurrent } from "../../store/user/asyncActions";
+import { Loading } from "../../components";
+import { showModal } from "../../store/app/appSlice";
 
-const { IoClose } = icons;
+const { IoClose, LuQrCode, FaMoneyBill, BsQrCode } = icons;
 
 const CheckOut = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { current } = useSelector((state) => state.user);
-  console.log(current);
+  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [address, setAddress] = useState(null);
+  const handleCreateOrder = async () => {
+    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    const response = await apiCreateOrder({ address, payment: paymentMethod });
+    dispatch(showModal({ isShowModal: false, modalChildren: null }));
+    if (response?.success) {
+      navigate(`/`);
+      dispatch(getCurrent());
+    }
+  };
   return (
     <div className="flex pl-7">
-      <div className="flex w-[70%] p-7">
-        <div className="flex-1">address</div>
-        <div className="flex-1">payment</div>
+      <div className="w-[70%] p-7">
+        <div className="pb-5">
+          <img
+            src={checkoutLogo}
+            alt="logo"
+            className="h-14 cursor-pointer"
+            onClick={() => navigate(`/`)}
+          />
+        </div>
+        <div className="flex gap-7">
+          <div className="flex-1 flex flex-col gap-5">
+            <h3 className="font-medium text-[20px]">Thông tin nhận hàng</h3>
+            <input
+              type="text"
+              className="border w-full p-2 rounded-[4px]"
+              placeholder="Address"
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+          <div className="flex-1 flex flex-col gap-5 w-full h-full ">
+            <h3 className="font-medium text-[20px]">Hình thức thanh toán</h3>
+            <div>
+              <di className="flex justify-between border p-3 items-center">
+                <div className="flex gap-2">
+                  <input
+                    type="radio"
+                    name="checkout"
+                    onClick={() => setPaymentMethod("qr")}
+                  />
+                  <label>Thanh toán qua VietQR</label>
+                </div>
+                <LuQrCode size={18} />
+              </di>
+              {paymentMethod == "qr" && (
+                <div className="w-full flex justify-center py-4">
+                  <BsQrCode size={200} />
+                </div>
+              )}
+            </div>
+            <div className="flex justify-between border p-3 items-center ">
+              <div className="flex gap-2">
+                <input
+                  type="radio"
+                  name="checkout"
+                  defaultChecked
+                  onClick={() => setPaymentMethod("cod")}
+                />
+                <label>Thanh toán khi nhận hàng (cod)</label>
+              </div>
+              <FaMoneyBill size={20} />
+            </div>
+          </div>
+        </div>
       </div>
       <div className="w-[30%] bg-gray-50 h-screen pr-7">
         <h2 className="px-7 border-b font-bold text-xl flex justify-between items-center h-[10%] ">
@@ -100,7 +166,10 @@ const CheckOut = () => {
             >
               Quay về giỏ hàng
             </button>
-            <button className="py-3 px-5 rounded-md transition-colors duration-200 flex items-center justify-center bg-[#2a9dcc] hover:bg-[rgb(45,113,140)]">
+            <button
+              onClick={handleCreateOrder}
+              className="py-3 px-5 rounded-md transition-colors duration-200 flex items-center justify-center bg-[#2a9dcc] hover:bg-[rgb(45,113,140)]"
+            >
               CHECKOUT
             </button>
           </div>

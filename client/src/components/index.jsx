@@ -1,7 +1,7 @@
-export { default as Header } from "./Header";
-export { default as Navigation } from "./Navigation";
+export { default as Header } from "./headers/Header";
+export { default as Navigation } from "./headers/Navigation";
 export { default as Sidebar } from "./sidebar/Sidebar";
-export { default as Banner } from "./Banner";
+export { default as DetailOrder } from "./DetailOrder";
 export { default as Footer } from "./Footer";
 export { default as Product } from "./Product";
 export { default as SelectOption } from "./SelectOption";
@@ -20,5 +20,5 @@ export { default as SelectForm2 } from "./SelectForm2";
 export { default as Modal } from "./Modal";
 export { default as Size } from "./Size";
 export { default as SearchProduct } from "./SearchProduct";
-export { default as Cart } from "./Cart";
-export { default as WislistBar } from "./WislistBar";
+export { default as Cart } from "./sidebar/Cart";
+export { default as WislistBar } from "./sidebar/WislistBar";

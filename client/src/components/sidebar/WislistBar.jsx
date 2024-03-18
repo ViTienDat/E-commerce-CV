@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showWislist } from "../store/app/appSlice";
-import icons from "../ultils/icons";
-import { formatMoney } from "../ultils/helpers";
+import { showWislist } from "../../store/app/appSlice";
+import icons from "../../ultils/icons";
+import { formatMoney } from "../../ultils/helpers";
 import { useNavigate } from "react-router-dom";
-import path from "../ultils/path";
-import { apiRemoveWislist } from "../apis";
-import { getCurrent } from "../store/user/asyncActions";
+import path from "../../ultils/path";
+import { apiRemoveWislist } from "../../apis";
+import { getCurrent } from "../../store/user/asyncActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -29,7 +29,7 @@ const WislistBar = () => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="w-[350px] h-screen bg-gray-100 flex flex-col"
+      className="w-[350px] h-screen bg-gray-100 flex flex-col scale-up-hor-right"
     >
       <ToastContainer />
       <h2 className="p-4 border-b font-bold text-xl flex justify-between items-center h-[10%] ">
@@ -56,6 +56,7 @@ const WislistBar = () => {
                     navigate(
                       `/${path.DETAIL_PRODUCT}/${el.product._id}/${el.product.slug}`
                     );
+                    dispatch(showWislist({ signal: false }));
                   }}
                 />
                 <div className="flex flex-col w-full justify-between">

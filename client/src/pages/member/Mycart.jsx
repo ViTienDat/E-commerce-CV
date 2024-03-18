@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import icons from "../../ultils/icons";
 import { formatMoney } from "../../ultils/helpers";
 import { apiRemoveCart, apiUpdateCart } from "../../apis";
@@ -52,6 +52,7 @@ const Mycart = () => {
   };
   return (
     <div>
+      <ToastContainer />
       <div className="flex flex-col gap-10 none w-full">
         <div className="h-[75px] flex items-center justify-center text-3xl font-bold px-4 border-b">
           <h1>My cart</h1>

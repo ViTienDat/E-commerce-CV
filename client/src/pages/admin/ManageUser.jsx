@@ -6,6 +6,7 @@ import {
   Pagination,
   InputFrom,
   SelectFrom,
+  Loading,
 } from "../../components";
 import useDebounce from "../../hooks/useDebounce";
 const limit = import.meta.env.VITE_APP_LIMIT;
@@ -14,8 +15,11 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import { showModal } from "../../store/app/appSlice";
+import { useDispatch } from "react-redux";
 
 const ManageUser = () => {
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
@@ -38,7 +42,9 @@ const ManageUser = () => {
 
   const [params] = useSearchParams();
   const fetchUsers = async (params) => {
+    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await apiGetUsers({ ...params, limit: limit });
+    dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) setUsers(response);
   };
 
@@ -54,7 +60,9 @@ const ManageUser = () => {
   }, [update]);
 
   const handleUpdate = async (data) => {
+    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await apiUpdateUser(data, editElement._id);
+    dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) {
       setEditElement(null);
       toast.success(response.message);

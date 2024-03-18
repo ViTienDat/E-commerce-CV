@@ -20,7 +20,6 @@ const Product = ({ data }) => {
   };
   const handleRomeveWislist = async (pid) => {
     const response = await apiRemoveWislist(pid);
-    console.log(response);
     if (response?.success) {
       dispatch(getCurrent());
     }

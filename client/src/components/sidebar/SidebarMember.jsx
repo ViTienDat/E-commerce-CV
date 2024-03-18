@@ -3,7 +3,6 @@ import logo from "../../assets/logo.webp";
 import { Link, NavLink } from "react-router-dom";
 import path from "../../ultils/path";
 import { memberSidebar } from "../../ultils/contants";
-import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 
 const activeStyle = "px-4 py-2 flex items-center gap-2 bg-gray-300";
 const notActiveStyle = "px-4 py-2 flex items-center gap-2 hover:bg-gray-200";

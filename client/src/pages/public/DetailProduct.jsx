@@ -148,7 +148,6 @@ const DetailProduct = () => {
 
   const handdleRemoveWislist = async (pid) => {
     const response = await apiRemoveWislist(pid);
-    console.log(response);
     if (response?.success) {
       toast.success("Success");
       dispatch(getCurrent());
@@ -173,8 +172,8 @@ const DetailProduct = () => {
           <h3 className="text-main">{title.toUpperCase()}</h3>
         </div>
       </div>
-      <div className="flex m-auto w-main my-[35px] gap-[30px]">
-        <div className="w-[40%] flex flex-col gap-4">
+      <div className="flex max-md:flex-col m-auto w-main my-[35px] gap-[30px]">
+        <div className="w-[40%] max-md:w-full flex flex-col gap-4">
           <img src={changeThumb || productData?.thumbnail} alt="thumbnail" />
           {productData?.images.length > 1 && (
             <div className="w-full">
@@ -253,8 +252,7 @@ const DetailProduct = () => {
               </div>
             )}
             <div className="w-main pt-8 pb-4 ">
-              {productData?.category.title !== "bottom" &&
-              productData?.category.title !== "accessories" ? (
+              {productData?.category.title !== "accessories" ? (
                 <span
                   onClick={() =>
                     dispatch(
@@ -291,13 +289,20 @@ const DetailProduct = () => {
           </div>
           <div className="flex flex-col">
             <div className="flex gap-5">
-              <button
-                onClick={() => handleUpdateCart()}
-                className="flex justify-center gap-2 items-center text-white transition-colors duration-200 bg-main py-3 w-[250px] font-semibold hover:bg-main2 text-[13px]"
-              >
-                <BsCartPlus size={20} />
-                THÊM VÀO GIỎ HÀNG
-              </button>
+              {productData?.isready ? (
+                <button
+                  onClick={() => handleUpdateCart()}
+                  className="flex justify-center gap-2 items-center text-white transition-colors duration-200 bg-main py-3 w-[250px] font-semibold hover:bg-main2 text-[13px]"
+                >
+                  <BsCartPlus size={20} />
+                  THÊM VÀO GIỎ HÀNG
+                </button>
+              ) : (
+                <span className="flex justify-center cursor-default gap-2 items-center text-white transition-colors duration-200 bg-gray-300 py-3 w-[250px] font-semibold text-[13px]">
+                  <BsCartPlus size={20} />
+                  THÊM VÀO GIỎ HÀNG
+                </span>
+              )}
               {current?.wislist.find(
                 (el) => el?.product?._id == productData?._id
               ) ? (

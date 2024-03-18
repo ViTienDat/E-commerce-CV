@@ -1,7 +1,15 @@
 import path from "./path";
 import icons from "./icons";
 
-const { MdDashboard, FaLayerGroup, RiBillFill, BiLogoProductHunt } = icons;
+const {
+  MdDashboard,
+  FaLayerGroup,
+  RiBillFill,
+  IoPerson,
+  BiLogoProductHunt,
+  FaShoppingCart,
+  FaHeart,
+} = icons;
 
 export const navigations = [
   {
@@ -24,7 +32,7 @@ export const navigations = [
 export const selectOption = [
   {
     id: 1,
-    value: "",
+    value: "createdAt",
     text: "Mặc định",
   },
   {
@@ -48,12 +56,12 @@ export const selectOption = [
     text: "giá tăng dần",
   },
   {
-    id: 1,
+    id: 6,
     value: "-createdAt",
     text: "Hàng mới nhất",
   },
   {
-    id: 1,
+    id: 7,
     value: "createdAt",
     text: "Hàng cũ nhất",
   },
@@ -105,21 +113,21 @@ export const memberSidebar = [
     type: "single",
     text: "Personal",
     path: `/${path.MEMBER}/${path.PERSONAL}`,
-    icon: <MdDashboard size={20} />,
+    icon: <IoPerson size={20} />,
   },
   {
     id: 2,
     type: "single",
     text: "My cart",
     path: `/${path.MEMBER}/${path.MY_CART}`,
-    icon: <FaLayerGroup size={20} />,
+    icon: <FaShoppingCart size={20} />,
   },
   {
     id: 3,
     type: "single",
     text: "Wislist",
     path: `/${path.MEMBER}/${path.WISLIST}`,
-    icon: <BiLogoProductHunt size={20} />,
+    icon: <FaHeart size={20} />,
   },
   {
     id: 4,

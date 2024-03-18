@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { InputFrom, Pagination } from "../../components";
+import { InputFrom, Loading, Pagination } from "../../components";
 import { useForm } from "react-hook-form";
 import { apiGetProducts, apiDeleteProduct } from "../../apis";
 import { formatString } from "../../ultils/helpers";
@@ -15,6 +15,8 @@ import UpdateProduct from "./UpdateProduct";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { showModal } from "../../store/app/appSlice";
+import { useDispatch } from "react-redux";
 
 const { BiEdit, RiDeleteBin5Fill } = icons;
 
@@ -30,7 +32,7 @@ const ManageProduct = () => {
   const [products, setProducts] = useState(null);
   const [editProduct, setEditProduct] = useState(null);
   const [update, setUpdate] = useState(false);
-
+  const dispatch = useDispatch();
   const render = useCallback(() => {
     setUpdate(!update);
   }, [update]);
@@ -39,10 +41,12 @@ const ManageProduct = () => {
   const location = useLocation();
   const handleSearchProduct = (data) => {};
   const fetchProducts = async (params) => {
+    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await apiGetProducts({
       ...params,
       limit: import.meta.env.VITE_APP_LIMIT,
     });
+    dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response?.success) {
       setProducts(response?.data);
       setCounts(response?.counts);

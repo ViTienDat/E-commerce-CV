@@ -10,6 +10,8 @@ const path = {
   DETAIL_PRODUCT__PID__TITLE: "san-pham/:pid/:title",
   DETAIL_PRODUCT: "san-pham",
   CHECKOUT: "checkout",
+  SEARCH: "search",
+  // SEARCH_PRODUCT: "search/:title",
   //admin
   ADMIN: "admin",
   DASHBOARD: "dashboard",

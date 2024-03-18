@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import path from "../ultils/path";
+import path from "../../ultils/path";
 import { useSelector, useDispatch } from "react-redux";
-import { getCurrent } from "../store/user/asyncActions";
-import { logout, clearMessage } from "../store/user/userSlice";
+import { getCurrent } from "../../store/user/asyncActions";
+import { logout, clearMessage } from "../../store/user/userSlice";
 import Swal from "sweetalert2";
-import icons from "../ultils/icons";
+import icons from "../../ultils/icons";
 
 const { IoLogOutOutline, MdOutlineAccountCircle } = icons;
 

@@ -4,6 +4,8 @@ import { apiGetProducts } from "../../apis/product";
 import { Link } from "react-router-dom";
 import path from "../../ultils/path";
 import Masonry from "react-masonry-css";
+import { showModal } from "../../store/app/appSlice";
+import { useDispatch } from "react-redux";
 
 const breakpointColumnsObj = {
   default: 4,
@@ -14,8 +16,11 @@ const breakpointColumnsObj = {
 
 const Home = () => {
   const [products, setProducts] = useState(null);
+  const dispatch = useDispatch();
   const fetchProduct = async () => {
+    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await apiGetProducts();
+    dispatch(showModal({ isShowModal: false, modalChildren: null }));
     setProducts(response?.data);
   };
   useEffect(() => {
@@ -25,7 +30,7 @@ const Home = () => {
   window.scrollTo(0, 0);
 
   return (
-    <div className="w-main py-[35px]">
+    <div className="w-main py-10">
       <div className="flex gap-[30px] flex-wrap">
         <Masonry
           breakpointCols={breakpointColumnsObj}
