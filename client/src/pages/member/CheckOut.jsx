@@ -19,7 +19,7 @@ const CheckOut = () => {
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [address, setAddress] = useState(null);
   const handleCreateOrder = async () => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiCreateOrder({ address, payment: paymentMethod });
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response?.success) {

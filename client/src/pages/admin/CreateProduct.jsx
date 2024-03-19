@@ -24,7 +24,7 @@ const CreateProduct = () => {
     if (data.images) {
       for (let image of data.images) formData.append("images", image);
     }
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiCreateProduct(formData);
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response?.success) {

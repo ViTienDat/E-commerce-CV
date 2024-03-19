@@ -42,7 +42,7 @@ const ManageOrder = () => {
   const q = watch("q");
 
   const fetchOrder = async (params) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiGetAllOrder({
       ...params,
       limit: import.meta.env.VITE_APP_LIMIT,
@@ -131,7 +131,7 @@ const ManageOrder = () => {
                       dispatch(
                         showModal({
                           isShowModal: true,
-                          modalChildren: <DetailOrder items={el.products} />,
+                          modalChildren: el.products,
                         })
                       )
                     }

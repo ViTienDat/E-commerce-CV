@@ -109,7 +109,7 @@ const DetailProduct = () => {
       if (isActiveSize) {
         data.size = isActiveSize;
       }
-      dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+      dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
       const response = await apiUpdateCart(data);
       dispatch(showModal({ isShowModal: false, modalChildren: null }));
       if (response?.success) {
@@ -258,9 +258,7 @@ const DetailProduct = () => {
                     dispatch(
                       showModal({
                         isShowModal: true,
-                        modalChildren: (
-                          <Size category={productData?.category.title} />
-                        ),
+                        modalChildren: productData?.category.title,
                       })
                     )
                   }

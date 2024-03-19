@@ -41,7 +41,7 @@ const ManageProduct = () => {
   const location = useLocation();
   const handleSearchProduct = (data) => {};
   const fetchProducts = async (params) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiGetProducts({
       ...params,
       limit: import.meta.env.VITE_APP_LIMIT,

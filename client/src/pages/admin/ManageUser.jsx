@@ -42,7 +42,7 @@ const ManageUser = () => {
 
   const [params] = useSearchParams();
   const fetchUsers = async (params) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiGetUsers({ ...params, limit: limit });
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) setUsers(response);
@@ -60,7 +60,7 @@ const ManageUser = () => {
   }, [update]);
 
   const handleUpdate = async (data) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiUpdateUser(data, editElement._id);
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) {

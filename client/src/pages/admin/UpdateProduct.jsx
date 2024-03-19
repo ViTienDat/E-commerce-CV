@@ -32,7 +32,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
     window.scrollTo(0, 0);
   }, [editProduct]);
   const handleUpdateProduct = async (data) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiUpdateProduct(data, editProduct._id);
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response?.success) {

@@ -10,7 +10,7 @@ const History = () => {
   const dispatch = useDispatch();
   const [userOrder, setUserOrder] = useState(null);
   const fetchOrders = async () => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiGetOrderUser();
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response?.success) {
@@ -66,7 +66,7 @@ const History = () => {
                       dispatch(
                         showModal({
                           isShowModal: true,
-                          modalChildren: <DetailOrder items={el.products} />,
+                          modalChildren: el.products,
                         })
                       )
                     }

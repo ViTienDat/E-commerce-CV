@@ -71,8 +71,8 @@ const Mycart = () => {
                 </tr>
               </thead>
               <tbody className="text-[15px]">
-                {current?.cart?.map((el) => (
-                  <tr className="">
+                {current?.cart?.map((el, idx) => (
+                  <tr key={idx} className="">
                     <td className="border flex justify-center">
                       <img
                         src={el.product.thumbnail}

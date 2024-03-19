@@ -30,7 +30,14 @@ import path from "./ultils/path";
 import { getCategories } from "./store/app/asyncActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Modal, Cart, WislistBar } from "./components";
+import {
+  Modal,
+  Cart,
+  WislistBar,
+  Loading,
+  Size,
+  DetailOrder,
+} from "./components";
 import { showCart, showWislist } from "./store/app/appSlice";
 
 function App() {
@@ -41,7 +48,6 @@ function App() {
   const { isShowModal, modalChildren, isShowCart, isShowWislist } = useSelector(
     (state) => state.app
   );
-
   return (
     <div className="font-main relative">
       {isShowCart && (
@@ -60,7 +66,17 @@ function App() {
           <WislistBar />
         </div>
       )}
-      {isShowModal && <Modal>{modalChildren}</Modal>}
+      {isShowModal && (
+        <Modal>
+          {modalChildren == "loading" ? (
+            <Loading />
+          ) : typeof modalChildren == "object" ? (
+            <DetailOrder items={modalChildren} />
+          ) : (
+            <Size category={modalChildren} />
+          )}
+        </Modal>
+      )}
       <Routes>
         <Route path={path.CHECKOUT} element={<CheckOut />} />
         <Route path={path.PUBLIC} element={<Public />}>

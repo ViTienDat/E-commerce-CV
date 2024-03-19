@@ -38,7 +38,7 @@ const Products = () => {
   const [Products, setProducts] = useState(null);
   const { category } = useParams();
   const fetchProductByCategory = async (queries) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiGetProducts({ ...queries, category });
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) setProducts(response);

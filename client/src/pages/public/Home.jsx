@@ -18,7 +18,7 @@ const Home = () => {
   const [products, setProducts] = useState(null);
   const dispatch = useDispatch();
   const fetchProduct = async () => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiGetProducts();
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     setProducts(response?.data);

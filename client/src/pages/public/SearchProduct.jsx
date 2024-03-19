@@ -18,7 +18,7 @@ const SearchProduct = () => {
   const [params] = useSearchParams();
   const [products, setProducts] = useState(null);
   const fetchSearchProducts = async (params) => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
     const response = await apiGetProducts(params);
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response?.success) {

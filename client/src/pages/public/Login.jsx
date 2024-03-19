@@ -36,7 +36,7 @@ const Login = () => {
       : validate(data, setInvalidFields);
     if (invalid === 0) {
       if (isRegister) {
-        dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+        dispatch(showModal({ isShowModal: true, modalChildren: "loading" }));
         const response = await apiRegister(payload);
         dispatch(showModal({ isShowModal: false, modalChildren: null }));
         if (response.success) {
