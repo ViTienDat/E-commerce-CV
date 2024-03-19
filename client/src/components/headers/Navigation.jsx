@@ -56,7 +56,33 @@ const Navigation = () => {
         </div>
 
         <div className="h-full flex items-center">
-          <div className="flex gap-6 h-full">
+          <div className="flex h-full w-full">
+            {current && (
+              <div className="flex gap-8 items-center">
+                <span
+                  className="hover:text-red-500 cursor-pointer relative"
+                  onClick={() => dispatch(showWislist({ signal: true }))}
+                >
+                  {current.wislist.length > 0 && (
+                    <span className="top-[-11px] left-3 absolute text-white text-[13px] h-5 w-5 justify-center items-center flex bg-main2 rounded-full">
+                      {current.wislist.length}
+                    </span>
+                  )}
+                  <FaHeart size={20} />
+                </span>
+                <span
+                  className="hover:text-red-500 cursor-pointer relative"
+                  onClick={() => dispatch(showCart({ signal: true }))}
+                >
+                  {current.cart.length > 0 && (
+                    <span className="top-[-11px] left-3 absolute text-white text-[13px] h-5 w-5 justify-center items-center flex bg-main2 rounded-full">
+                      {current.cart.length}
+                    </span>
+                  )}
+                  <BsFillHandbagFill size={18} />
+                </span>
+              </div>
+            )}
             <span
               className="h-full"
               onMouseLeave={() => setIsShowSearch(false)}
@@ -66,7 +92,7 @@ const Navigation = () => {
                 <IoSearchSharp size={22} />
               </span>
               {isShowSearch && (
-                <div className="absolute right-[180px]">
+                <div className="absolute right-[110px]">
                   <div className="relative z-50">
                     <input
                       onMouseEnter={() => setIsShowSearch(true)}
@@ -94,32 +120,6 @@ const Navigation = () => {
                 </div>
               )}
             </span>
-            {current && (
-              <div className="flex gap-6 items-center">
-                <span
-                  className="hover:text-red-500 cursor-pointer relative"
-                  onClick={() => dispatch(showWislist({ signal: true }))}
-                >
-                  {current.wislist.length > 0 && (
-                    <span className="top-[-11px] left-3 absolute text-white text-[13px] h-5 w-5 justify-center items-center flex bg-main2 rounded-full">
-                      {current.wislist.length}
-                    </span>
-                  )}
-                  <FaHeart size={20} />
-                </span>
-                <span
-                  className="hover:text-red-500 cursor-pointer relative"
-                  onClick={() => dispatch(showCart({ signal: true }))}
-                >
-                  {current.cart.length > 0 && (
-                    <span className="top-[-11px] left-3 absolute text-white text-[13px] h-5 w-5 justify-center items-center flex bg-main2 rounded-full">
-                      {current.cart.length}
-                    </span>
-                  )}
-                  <BsFillHandbagFill size={18} />
-                </span>
-              </div>
-            )}
           </div>
         </div>
       </div>

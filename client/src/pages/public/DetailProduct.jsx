@@ -116,6 +116,7 @@ const DetailProduct = () => {
         toast.success("Update to cart");
         dispatch(getCurrent());
       } else {
+        console.log(response);
         toast.error(response.message);
       }
     }
