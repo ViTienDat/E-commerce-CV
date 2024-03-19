@@ -192,7 +192,7 @@ const DetailProduct = () => {
             </div>
           )}
         </div>
-        <div className="w-[60%] text-[14px]">
+        <div className="w-[60%] text-[14px] max-md:w-full">
           <h1 className="text-[30px] mb-[10px]">
             {productData?.title.toUpperCase()}
           </h1>
@@ -288,17 +288,17 @@ const DetailProduct = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="flex gap-5">
+            <div className="flex gap-5 max-md:w-full">
               {productData?.isready ? (
                 <button
                   onClick={() => handleUpdateCart()}
-                  className="flex justify-center gap-2 items-center text-white transition-colors duration-200 bg-main py-3 w-[250px] font-semibold hover:bg-main2 text-[13px]"
+                  className="flex justify-center max-md:flex-1 gap-2 items-center text-white transition-colors duration-200 bg-main py-3 w-[250px] font-semibold hover:bg-main2 text-[13px]"
                 >
                   <BsCartPlus size={20} />
                   THÊM VÀO GIỎ HÀNG
                 </button>
               ) : (
-                <span className="flex justify-center cursor-default gap-2 items-center text-white transition-colors duration-200 bg-gray-300 py-3 w-[250px] font-semibold text-[13px]">
+                <span className="flex justify-center max-md:flex-1 cursor-default gap-2 items-center text-white transition-colors duration-200 bg-gray-300 py-3 w-[250px] font-semibold text-[13px]">
                   <BsCartPlus size={20} />
                   THÊM VÀO GIỎ HÀNG
                 </span>

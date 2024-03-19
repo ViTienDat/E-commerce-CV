@@ -8,6 +8,7 @@ import {
   DetailProduct,
   DetailCart,
   SearchProduct,
+  AccountTest,
 } from "./pages/public";
 import {
   AdminLayout,
@@ -66,6 +67,7 @@ function App() {
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.PRODUCTS__CATEGORY} element={<Products />} />
           <Route path={path.CONTACT} element={<Contact />} />
+          <Route path={path.ACCOUNT_TEST} element={<AccountTest />} />
           <Route path={path.DETAIL_CART} element={<DetailCart />} />
           <Route path={path.SEARCH} element={<SearchProduct />} />
           <Route

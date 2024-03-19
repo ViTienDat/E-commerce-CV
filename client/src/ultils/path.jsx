@@ -4,6 +4,7 @@ const path = {
   ALL: "*",
   LOGIN: "login",
   PRODUCTS: "product",
+  ACCOUNT_TEST: "account-test",
   PRODUCTS__CATEGORY: "product/:category",
   DETAIL_CART: "detail-cart",
   CONTACT: "contact",
