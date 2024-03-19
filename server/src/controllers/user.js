@@ -33,8 +33,8 @@ const login = asyncHandler(async (req, res) => {
   }
   const response = await User.findOne({ email });
   if (response && (await response?.isCorrectPassword(password))) {
-    const { password, role, ...data } = response.toObject();
-    const accessToken = createAccessToken(response._id, role);
+    const { password, role, isblock, ...data } = response.toObject();
+    const accessToken = createAccessToken(response._id, role, isblock);
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
@@ -169,7 +169,13 @@ const deleteUserByAdmin = asyncHandler(async (req, res) => {
 });
 
 const updateCart = asyncHandler(async (req, res) => {
-  const { _id } = req.user;
+  const { _id, isblock } = req.user;
+  if(isblock == "Blocked") {
+    return res.status(200).json({
+      success: false,
+      message: "Your account has been locked"
+    })
+  }
   const { pid, color, size, quantity = 1 } = req.body;
   if (!pid || !quantity) throw new Error("missing input");
   const cart = await User.findById(_id).select("cart");
