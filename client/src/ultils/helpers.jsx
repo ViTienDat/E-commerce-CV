@@ -17,7 +17,7 @@ export const validate = (payload, setInvalidFields) => {
     switch (array[0]) {
       case "email":
         const regex = /^\S+@\S+\.\S+$/;
-        if (!array[1].match(regex) && array[1] !== "admin") {
+        if (!array[1].match(regex)) {
           invalid++;
           setInvalidFields((prev) => [
             ...prev,
@@ -31,6 +31,16 @@ export const validate = (payload, setInvalidFields) => {
           setInvalidFields((prev) => [
             ...prev,
             { name: array[0], mes: "password tối thiểu 6 ký tự" },
+          ]);
+        }
+        break;
+      case "mobile":
+        const regex2 = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+        if (!array[1].match(regex2)) {
+          invalid++;
+          setInvalidFields((prev) => [
+            ...prev,
+            { name: array[0], mes: "Số điện thoại không hợp lệ" },
           ]);
         }
         break;
