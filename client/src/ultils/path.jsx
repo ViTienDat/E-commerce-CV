@@ -15,7 +15,7 @@ const path = {
   // SEARCH_PRODUCT: "search/:title",
   //admin
   ADMIN: "admin",
-  DASHBOARD: "dashboard",
+  UPDATE_ADMIN: "update-admin",
   MANAGE_USER: "manage-user",
   MANAGE_ORDER: "manage-order",
   MANAGE_PRODUCTS: "manage-products",

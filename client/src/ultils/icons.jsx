@@ -10,6 +10,7 @@ import {
   MdDashboard,
   MdOutlineAccountCircle,
   MdOutlinePerson,
+  MdRemoveShoppingCart,
 } from "react-icons/md";
 import {
   FaLayerGroup,
@@ -49,6 +50,7 @@ const icons = {
   LuQrCode,
   IoLogOutOutline,
   TiTick,
+  MdRemoveShoppingCart,
   GrFormNextLink,
   IoIosHeartEmpty,
   IoHeartDislikeOutline,

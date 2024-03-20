@@ -1,5 +1,5 @@
 import React from "react";
-import { formatMoney } from "../ultils/helpers";
+import { formatMoney } from "../../ultils/helpers";
 
 const DetailOrder = ({ items }) => {
   console.log(items);

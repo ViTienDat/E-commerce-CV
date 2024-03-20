@@ -1,11 +1,11 @@
 import React, { memo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import path from "../ultils/path";
-import { formatMoney } from "../ultils/helpers";
-import { SelectOption } from "./";
-import { apiRemoveWislist, apiUpdateWislist } from "../apis";
+import path from "../../ultils/path";
+import { formatMoney } from "../../ultils/helpers";
+import { SelectOption } from "..";
+import { apiRemoveWislist, apiUpdateWislist } from "../../apis";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrent } from "../store/user/asyncActions";
+import { getCurrent } from "../../store/user/asyncActions";
 import Swal from "sweetalert2";
 
 const Product = ({ data }) => {

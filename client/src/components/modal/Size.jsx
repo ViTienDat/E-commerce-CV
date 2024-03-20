@@ -1,11 +1,11 @@
 import React, { memo, useRef, useEffect } from "react";
-import teeSize from "../assets/tee-size.webp";
-import jacketSize from "../assets/jacket-size.webp";
-import hoodieSize from "../assets/hoodie-size.webp";
-import bottomSize from "../assets/bottom-size.webp";
-import icons from "../ultils/icons";
+import teeSize from "../../assets/tee-size.webp";
+import jacketSize from "../../assets/jacket-size.webp";
+import hoodieSize from "../../assets/hoodie-size.webp";
+import bottomSize from "../../assets/bottom-size.webp";
+import icons from "../../ultils/icons";
 import { useDispatch } from "react-redux";
-import { showModal } from "../store/app/appSlice";
+import { showModal } from "../../store/app/appSlice";
 
 const { IoClose } = icons;
 

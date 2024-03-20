@@ -56,7 +56,7 @@ const Header = () => {
                 to={
                   current?.role === "user"
                     ? `/${path.MEMBER}/${path.PERSONAL}`
-                    : `/${path.ADMIN}/${path.DASHBOARD}`
+                    : `/${path.ADMIN}/${path.UPDATE_ADMIN}`
                 }
               >
                 <span

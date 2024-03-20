@@ -5,7 +5,7 @@ const AccountTest = () => {
     <div className="w-full">
       <div className="flex flex-col gap-5 w-main m-auto">
         <div className="flex gap-10">
-          <span>Admin acount: admin</span>
+          <span>Admin acount: admin@gmail.com</span>
           <span>|</span>
           <span>Password: 123456</span>
         </div>

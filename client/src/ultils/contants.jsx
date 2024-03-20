@@ -76,8 +76,8 @@ export const adminSidebar = [
   {
     id: 1,
     type: "single",
-    text: "Dashboard",
-    path: `/${path.ADMIN}/${path.DASHBOARD}`,
+    text: "Update admin",
+    path: `/${path.ADMIN}/${path.UPDATE_ADMIN}`,
     icon: <MdDashboard size={20} />,
   },
   {

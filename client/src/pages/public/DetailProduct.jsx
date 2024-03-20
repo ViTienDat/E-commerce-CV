@@ -17,7 +17,12 @@ import Swal from "sweetalert2";
 import { getCurrent } from "../../store/user/asyncActions";
 import icons from "../../ultils/icons";
 
-const { IoIosHeartEmpty, BsCartPlus, IoHeartDislikeOutline } = icons;
+const {
+  IoIosHeartEmpty,
+  BsCartPlus,
+  IoHeartDislikeOutline,
+  MdRemoveShoppingCart,
+} = icons;
 
 const settings = {
   dots: false,
@@ -298,8 +303,8 @@ const DetailProduct = () => {
                 </button>
               ) : (
                 <span className="flex justify-center max-md:flex-1 cursor-default gap-2 items-center text-white transition-colors duration-200 bg-gray-300 py-3 w-[250px] font-semibold text-[13px]">
-                  <BsCartPlus size={20} />
-                  THÊM VÀO GIỎ HÀNG
+                  <MdRemoveShoppingCart size={20} />
+                  HẾT HÀNG
                 </span>
               )}
               {current?.wislist.find(

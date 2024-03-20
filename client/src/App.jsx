@@ -15,7 +15,7 @@ import {
   ManageProduct,
   ManageUser,
   CreateProduct,
-  Dashboard,
+  Admin,
   ManageOrder,
 } from "./pages/admin";
 import {
@@ -91,8 +91,9 @@ function App() {
             element={<DetailProduct />}
           />
         </Route>
+
         <Route path={path.ADMIN} element={<AdminLayout />}>
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.UPDATE_ADMIN} element={<Admin />} />
           <Route path={path.MANAGE_ORDER} element={<ManageOrder />} />
           <Route path={path.MANAGE_PRODUCTS} element={<ManageProduct />} />
           <Route path={path.MANAGE_USER} element={<ManageUser />} />
