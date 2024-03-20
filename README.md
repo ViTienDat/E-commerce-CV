@@ -11,4 +11,5 @@ CLIENT
      ( vd: http://localhost:5000/api )
      
   3.npm install --lagacy-peer-deps
+  
   4.npm run dev
